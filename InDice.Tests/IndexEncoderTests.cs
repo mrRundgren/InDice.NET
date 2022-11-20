@@ -43,7 +43,7 @@ public class IndexEncoderTests
     {
         if(unsafeCharacters == null)
         {
-            return new IndexEncoder();
+            return new IndexEncoder("AOUÅEIYÄÖ");
         }
         
         return new IndexEncoder(unsafeCharacters);

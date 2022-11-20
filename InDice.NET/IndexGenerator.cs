@@ -5,6 +5,13 @@ public class IndexGenerator : IGenerator
 {
     public IEncoder Encoder { get; set; } = new IndexEncoder();
 
+    public IndexGenerator() { }
+
+    public IndexGenerator(string unsafeChars)
+    {
+        Encoder = new IndexEncoder(unsafeChars);
+    }
+
     public Dictionary<string, string> Generate(params string[] keywords)
     {
         Dictionary<string, string> result = new();

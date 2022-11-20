@@ -1,7 +1,7 @@
 ﻿namespace InDice.NET;
 public class IndexEncoder : IEncoder
 {
-    public string UnsafeChars { get; set; } = "AOUÅEIYÄÖ";
+    public string UnsafeChars { get; set; } = "";
 
     public IndexEncoder() { }
 

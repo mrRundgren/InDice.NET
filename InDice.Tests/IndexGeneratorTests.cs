@@ -74,8 +74,8 @@ public class IndexGeneratorTests
     }
 
     public IGenerator Given_a_generator() =>
-        new IndexGenerator();
+        new IndexGenerator("AOUÅEIYÄÖ");
 
     public (PersonModel person, IGenerator generator, string[] expected) Given_a_person_and_a_generator_and_an_expected_result() =>
-        (new PersonModel { Firstname = "Anders", Lastname = "Rundgren", HiringNo = 100101, Office = new OfficeModel { Name = "Malmö" } }, new IndexGenerator(), new string[] { "N", "R", "1", "M", "ND", "RN", "10", "ML", "NDR", "RND", "100", "MLM", "NDRS", "RNDG", "1001", "RNDGR", "10010", "NDRSR", "RNDGRN", "100101", "NDRSRN", "NDRSRND", "NDRSRNDG", "NDRSRNDGR", "NDRSRNDGRN" });
+        (new PersonModel { Firstname = "Anders", Lastname = "Rundgren", HiringNo = 100101, Office = new OfficeModel { Name = "Malmö" } }, new IndexGenerator("AOUÅEIYÄÖ"), new string[] { "N", "R", "1", "M", "ND", "RN", "10", "ML", "NDR", "RND", "100", "MLM", "NDRS", "RNDG", "1001", "RNDGR", "10010", "NDRSR", "RNDGRN", "100101", "NDRSRN", "NDRSRND", "NDRSRNDG", "NDRSRNDGR", "NDRSRNDGRN" });
 }
