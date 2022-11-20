@@ -7,4 +7,9 @@
     <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
   </PropertyGroup>
 
+    <PropertyGroup Condition=" '$(Version)' == '' ">
+	    <VersionPrefix Condition=" '$(VersionPrefix)' == '' ">1.0.1</VersionPrefix>
+	    <Version Condition=" '$(VersionSuffix)' != '' ">$(VersionPrefix)-$(VersionSuffix)</Version>
+	    <Version Condition=" '$(Version)' == '' ">$(VersionPrefix)</Version>
+    </PropertyGroup>
 </Project>
