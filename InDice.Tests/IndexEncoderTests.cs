@@ -43,9 +43,9 @@ public class IndexEncoderTests
     {
         if(unsafeCharacters == null)
         {
-            return new IndexEncoder("AOUÅEIYÄÖ");
+            return new DefaultEncoder("AOUÅEIYÄÖ");
         }
         
-        return new IndexEncoder(unsafeCharacters);
+        return new DefaultEncoder(unsafeCharacters);
     }
 }

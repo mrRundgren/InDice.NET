@@ -66,7 +66,7 @@ public class IndexGeneratorTests
         var generator = Given_a_generator();
 
         // When
-        generator.Encoder = new IndexEncoder("ABC");
+        generator.Encoder = new DefaultEncoder("ABC");
 
         // Then
         Assert.NotNull(generator.Encoder);
@@ -86,12 +86,12 @@ public class IndexGeneratorTests
         Assert.True(result.Count == 0);
     }
 
-    public IGenerator Given_a_generator() =>
+    public static IGenerator Given_a_generator() =>
         new IndexGenerator("AOUÅEIYÄÖ");
 
-    public (PersonModel person, IGenerator generator, string[] expected) Given_a_person_and_a_generator_and_an_expected_result() =>
+    public static (PersonModel person, IGenerator generator, string[] expected) Given_a_person_and_a_generator_and_an_expected_result() =>
         (new PersonModel { Firstname = "Anders", Lastname = "Rundgren", HiringNo = 100101, Office = new OfficeModel { Name = "Malmö" } }, new IndexGenerator("AOUÅEIYÄÖ"), new string[] { "N", "R", "1", "M", "ND", "RN", "10", "ML", "NDR", "RND", "100", "MLM", "NDRS", "RNDG", "1001", "RNDGR", "10010", "NDRSR", "RNDGRN", "100101", "NDRSRN", "NDRSRND", "NDRSRNDG", "NDRSRNDGR", "NDRSRNDGRN" });
 
-    public (PersonModel person, IGenerator generator, string[] expected) Given_a_person_with_manager_and_a_generator_and_an_expected_result() =>
-        (new PersonModel { Firstname = "Anders", Lastname = "Rundgren", HiringNo = 100101, Office = new OfficeModel { Name = "Malmö", Manager = new Manager { Name = "Peter Ohlman" } } }, new IndexGenerator("AOUÅEIYÄÖ"), new string[] { "N", "R", "1", "M", "P", "ND", "RN", "10", "ML", "PT", "NDR", "RND", "100", "MLM", "PTR", "NDRS", "RNDG", "1001", "PTRH", "RNDGR", "10010", "NDRSR", "PTRHL", "RNDGRN", "100101", "NDRSRN", "PTRHLM", "NDRSRND", "PTRHLMN", "NDRSRNDG", "NDRSRNDGR", "NDRSRNDGRN" });
+    public static (PersonModel person, IGenerator generator, string[] expected) Given_a_person_with_manager_and_a_generator_and_an_expected_result() =>
+        (new PersonModel { Firstname = "Anders", Lastname = "Rundgren", HiringNo = 100101, Office = new OfficeModel { Name = "Malmö", Manager = new Manager { Name = "Peter Ohlman" } }, Fields = new List<FieldModel> { new FieldModel { Name = ".NET" }, new FieldModel { Name = "Javascript" } } }, new IndexGenerator("AOUÅEIYÄÖ"), new string[] { "N", "R", "1", "M", "P", "J", "ND", "RN", "10", "ML", "PT", "NT", "JV", "NDR", "RND", "100", "MLM", "PTR", "JVS", "NDRS", "RNDG", "1001", "PTRH", "JVSC", "RNDGR", "10010", "NDRSR", "PTRHL", "JVSCR", "RNDGRN", "100101", "NDRSRN", "PTRHLM", "JVSCRP", "NDRSRND", "PTRHLMN", "JVSCRPT", "NDRSRNDG", "NDRSRNDGR", "NDRSRNDGRN" });
 }

@@ -1,11 +1,11 @@
 ﻿namespace InDice.NET;
-public class IndexEncoder : IEncoder
+public class DefaultEncoder : IEncoder
 {
     public string UnsafeChars { get; set; } = "";
 
-    public IndexEncoder() { }
+    public DefaultEncoder() { }
 
-    public IndexEncoder(string unsafeChars)
+    public DefaultEncoder(string unsafeChars)
     {
         UnsafeChars = unsafeChars;
     }

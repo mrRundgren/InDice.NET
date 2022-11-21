@@ -2,20 +2,24 @@
 
 namespace InDice.Tests.Models;
 
+[InDiceEntity]
 public class PersonModel : IIndexableEntity
 {
     public Guid Id { get; init; } = Guid.NewGuid();
-    [Keyword]
+    [InDiceGenerate]
     public string Firstname { get; set; } = string.Empty;
-    [Keyword]
+    [InDiceGenerate]
     public string Lastname { get; set; } = string.Empty;
-    [Keyword]
+    [InDiceGenerate]
     public int HiringNo { get; set; }
-    [Keyword]
+    [InDiceGenerate]
     public string DisplayName
     {
         get => $"{Firstname} {Lastname}";
     }
-    [Keyword]
+    [InDiceGenerate]
     public OfficeModel? Office { get; set; } = null;
+
+    [InDiceGenerate]
+    public List<FieldModel> Fields {get; set;} = new ();
 }

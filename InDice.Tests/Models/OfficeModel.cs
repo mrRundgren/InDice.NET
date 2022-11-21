@@ -1,14 +1,17 @@
 ﻿using InDice.NET;
+using System.Reflection;
+using System.Runtime.CompilerServices;
 
 namespace InDice.Tests.Models;
 
+[InDiceEntity]
 public class OfficeModel : IIndexableEntity
 {
     public Guid Id { get; init; } = Guid.NewGuid();
-    
-    [Keyword]
+
+    [InDiceGenerate]
     public string Name { get; set; } = string.Empty;
 
-    [Keyword]
+    [InDiceGenerate]
     public Manager? Manager { get; set; }
 }

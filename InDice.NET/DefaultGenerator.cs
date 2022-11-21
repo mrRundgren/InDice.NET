@@ -1,15 +1,18 @@
-﻿using System.Diagnostics.SymbolStore;
+﻿using System.Collections;
+using System.Diagnostics.SymbolStore;
 using System.Reflection;
 namespace InDice.NET;
 public class IndexGenerator : IGenerator
 {
-    public IEncoder Encoder { get; set; } = new IndexEncoder();
+    public IEncoder Encoder { get; set; } = null!;
 
-    public IndexGenerator() { }
+    public IndexGenerator() {
+        Encoder = new DefaultEncoder();
+    }
 
     public IndexGenerator(string unsafeChars)
     {
-        Encoder = new IndexEncoder(unsafeChars);
+        Encoder = new DefaultEncoder(unsafeChars);
     }
 
     public Dictionary<string, string> Generate(params string[] keywords)
@@ -34,7 +37,7 @@ public class IndexGenerator : IGenerator
 
     public Dictionary<string, string> Generate<T>(T entity) where T : class
     {
-        IEnumerable<PropertyInfo> properties = entity.GetType().GetProperties().Where(prop => prop.IsDefined(typeof(KeywordAttribute), false));
+        IEnumerable<PropertyInfo> properties = entity.GetType().GetProperties().Where(prop => prop.IsDefined(typeof(InDiceGenerateAttribute), false));
         Dictionary<string, string> result = new();
 
         foreach (var prop in properties)
@@ -45,13 +48,20 @@ public class IndexGenerator : IGenerator
 
                 if (val is IIndexableEntity)
                 {
-                    result = result.Concat(Generate(val).Where(x => !result.Keys.Contains(x.Key))).ToDictionary(_ => _.Key, _ => _.Value);
+                    result = result.Concat(Generate(val).Where(x => !result.ContainsKey(x.Key))).ToDictionary(_ => _.Key, _ => _.Value);
+                }
+                else if(val is IList list)
+                {
+                    foreach (var item in list)
+                    {
+                        result = result.Concat(Generate(item).Where(x => !result.ContainsKey(x.Key))).ToDictionary(_ => _.Key, _ => _.Value);
+                    }
                 }
                 else
                 {
                     if(val != null && !string.IsNullOrWhiteSpace(val.ToString()))
                     {
-                        result = result.Concat(Generate(val?.ToString() ?? "").Where(x => !result.Keys.Contains(x.Key))).ToDictionary(_ => _.Key, _ => _.Value);
+                        result = result.Concat(Generate(val?.ToString() ?? "").Where(x => !result.ContainsKey(x.Key))).ToDictionary(_ => _.Key, _ => _.Value);
                     }
                 }
             }
