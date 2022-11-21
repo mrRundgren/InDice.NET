@@ -3,11 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.3.32825.248
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "InDice", "InDice\InDice.csproj", "{F480CD85-B869-4683-8974-065713B5FA4D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "InDice.NET", "InDice.NET\InDice.NET.csproj", "{11C8503C-B571-4380-8DD8-A5C39996804A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "InDice.NET", "InDice.NET\InDice.NET.csproj", "{11C8503C-B571-4380-8DD8-A5C39996804A}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "InDice.Tests", "InDice.Tests\InDice.Tests.csproj", "{55510D5B-09F3-4543-A586-7394B6F21579}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "InDice.Tests", "InDice.Tests\InDice.Tests.csproj", "{55510D5B-09F3-4543-A586-7394B6F21579}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,10 +13,6 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{F480CD85-B869-4683-8974-065713B5FA4D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{F480CD85-B869-4683-8974-065713B5FA4D}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{F480CD85-B869-4683-8974-065713B5FA4D}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{F480CD85-B869-4683-8974-065713B5FA4D}.Release|Any CPU.Build.0 = Release|Any CPU
 		{11C8503C-B571-4380-8DD8-A5C39996804A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{11C8503C-B571-4380-8DD8-A5C39996804A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{11C8503C-B571-4380-8DD8-A5C39996804A}.Release|Any CPU.ActiveCfg = Release|Any CPU
