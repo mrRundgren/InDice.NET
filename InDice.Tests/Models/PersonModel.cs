@@ -1,7 +1,7 @@
 ﻿namespace InDice.Tests.Models;
 
 [InDiceEntity]
-public class PersonModel : IIndexableEntity
+public class PersonModel
 {
     public Guid Id { get; init; } = Guid.NewGuid();
     [InDiceGenerate]

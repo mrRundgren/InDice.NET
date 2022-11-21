@@ -1,7 +1,7 @@
 ﻿namespace InDice.Tests.Models;
 
 [InDiceEntity]
-public class OfficeModel : IIndexableEntity
+public class OfficeModel
 {
     public Guid Id { get; init; } = Guid.NewGuid();
 
