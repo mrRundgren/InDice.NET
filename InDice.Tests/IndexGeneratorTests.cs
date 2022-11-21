@@ -1,8 +1,4 @@
-﻿using InDice.NET;
-using InDice.Tests.Models;
-using Xunit;
-
-namespace InDice.Tests;
+﻿namespace InDice.Tests;
 
 public class IndexGeneratorTests
 {

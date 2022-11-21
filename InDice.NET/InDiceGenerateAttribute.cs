@@ -1,6 +1,4 @@
-﻿using System.Reflection;
-
-namespace InDice.NET;
+﻿namespace InDice.NET;
 
 [AttributeUsage(AttributeTargets.Property)]
 public class InDiceGenerateAttribute : Attribute {

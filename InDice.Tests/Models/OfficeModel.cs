@@ -1,8 +1,4 @@
-﻿using InDice.NET;
-using System.Reflection;
-using System.Runtime.CompilerServices;
-
-namespace InDice.Tests.Models;
+﻿namespace InDice.Tests.Models;
 
 [InDiceEntity]
 public class OfficeModel : IIndexableEntity

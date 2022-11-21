@@ -1,5 +1,3 @@
-using InDice.NET;
-
 namespace InDice.Tests;
 
 public class IndexEncoderTests

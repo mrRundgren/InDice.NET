@@ -1,6 +1,6 @@
 ﻿using System.Collections;
-using System.Diagnostics.SymbolStore;
 using System.Reflection;
+
 namespace InDice.NET;
 public class IndexGenerator : IGenerator
 {

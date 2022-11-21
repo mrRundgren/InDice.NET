@@ -1,6 +1,4 @@
-﻿using InDice.NET;
-
-namespace InDice.Tests.Models;
+﻿namespace InDice.Tests.Models;
 
 [InDiceEntity]
 public class Manager : IIndexableEntity
