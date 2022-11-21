@@ -45,21 +45,22 @@ public class IndexGenerator : IGenerator
             if(prop != null)
             {
                 var val = prop.GetValue(entity);
-
-                if (val is IIndexableEntity)
+                var isEntity = val?.GetType().IsDefined(typeof(InDiceEntityAttribute), false) ?? false;
+                
+                if (isEntity)
                 {
-                    result = result.Concat(Generate(val).Where(x => !result.ContainsKey(x.Key))).ToDictionary(_ => _.Key, _ => _.Value);
-                }
-                else if(val is IList list)
-                {
-                    foreach (var item in list)
-                    {
-                        result = result.Concat(Generate(item).Where(x => !result.ContainsKey(x.Key))).ToDictionary(_ => _.Key, _ => _.Value);
-                    }
+                    result = result.Concat(Generate(val!).Where(x => !result.ContainsKey(x.Key))).ToDictionary(_ => _.Key, _ => _.Value);
                 }
                 else
                 {
-                    if(val != null && !string.IsNullOrWhiteSpace(val.ToString()))
+                    if(val is IList list)
+                    {
+                        foreach (var item in list)
+                        {
+                            result = result.Concat(Generate(item).Where(x => !result.ContainsKey(x.Key))).ToDictionary(_ => _.Key, _ => _.Value);
+                        }
+                    }
+                    else if(!string.IsNullOrEmpty(val?.ToString() ?? ""))
                     {
                         result = result.Concat(Generate(val?.ToString() ?? "").Where(x => !result.ContainsKey(x.Key))).ToDictionary(_ => _.Key, _ => _.Value);
                     }
