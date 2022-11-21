@@ -51,8 +51,11 @@ public class IndexGeneratorTests
         // Given
         var generator = Given_a_generator();
 
+        //When
+        var result = generator.Encoder;
+
         // Then
-        Assert.NotNull(generator.Encoder);
+        Assert.NotNull(result);
     }
 
     [Fact]
