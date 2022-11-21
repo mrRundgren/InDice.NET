@@ -82,12 +82,28 @@ public class IndexGeneratorTests
         Assert.True(result.Count == 0);
     }
 
+    [Fact]
+    public void Default_generator_has_encoder() 
+    {
+        // When
+        var generator = Given_a_default_generator();
+
+        //When
+        var result = generator.Encoder;
+
+        //Then
+        Assert.NotNull(result);
+    }
+
+    public static IGenerator Given_a_default_generator() =>
+        new DefaultGenerator();
+
     public static IGenerator Given_a_generator() =>
-        new IndexGenerator("AOUÅEIYÄÖ");
+        new DefaultGenerator("AOUÅEIYÄÖ");
 
     public static (PersonModel person, IGenerator generator, string[] expected) Given_a_person_and_a_generator_and_an_expected_result() =>
-        (new PersonModel { Firstname = "Anders", Lastname = "Rundgren", HiringNo = 100101, Office = new OfficeModel { Name = "Malmö" } }, new IndexGenerator("AOUÅEIYÄÖ"), new string[] { "N", "R", "1", "M", "ND", "RN", "10", "ML", "NDR", "RND", "100", "MLM", "NDRS", "RNDG", "1001", "RNDGR", "10010", "NDRSR", "RNDGRN", "100101", "NDRSRN", "NDRSRND", "NDRSRNDG", "NDRSRNDGR", "NDRSRNDGRN" });
+        (new PersonModel { Firstname = "Anders", Lastname = "Rundgren", HiringNo = 100101, Office = new OfficeModel { Name = "Malmö" } }, new DefaultGenerator("AOUÅEIYÄÖ"), new string[] { "N", "R", "1", "M", "ND", "RN", "10", "ML", "NDR", "RND", "100", "MLM", "NDRS", "RNDG", "1001", "RNDGR", "10010", "NDRSR", "RNDGRN", "100101", "NDRSRN", "NDRSRND", "NDRSRNDG", "NDRSRNDGR", "NDRSRNDGRN" });
 
     public static (PersonModel person, IGenerator generator, string[] expected) Given_a_person_with_manager_and_a_generator_and_an_expected_result() =>
-        (new PersonModel { Firstname = "Anders", Lastname = "Rundgren", HiringNo = 100101, Office = new OfficeModel { Name = "Malmö", Manager = new Manager { Name = "Peter Ohlman" } }, Fields = new List<FieldModel> { new FieldModel { Name = ".NET" }, new FieldModel { Name = "Javascript" } } }, new IndexGenerator("AOUÅEIYÄÖ"), new string[] { "N", "R", "1", "M", "P", "J", "ND", "RN", "10", "ML", "PT", "NT", "JV", "NDR", "RND", "100", "MLM", "PTR", "JVS", "NDRS", "RNDG", "1001", "PTRH", "JVSC", "RNDGR", "10010", "NDRSR", "PTRHL", "JVSCR", "RNDGRN", "100101", "NDRSRN", "PTRHLM", "JVSCRP", "NDRSRND", "PTRHLMN", "JVSCRPT", "NDRSRNDG", "NDRSRNDGR", "NDRSRNDGRN" });
+        (new PersonModel { Firstname = "Anders", Lastname = "Rundgren", HiringNo = 100101, Office = new OfficeModel { Name = "Malmö", Manager = new Manager { Name = "Peter Ohlman" } }, Fields = new List<FieldModel> { new FieldModel { Name = ".NET" }, new FieldModel { Name = "Javascript" } } }, new DefaultGenerator("AOUÅEIYÄÖ"), new string[] { "N", "R", "1", "M", "P", "J", "ND", "RN", "10", "ML", "PT", "NT", "JV", "NDR", "RND", "100", "MLM", "PTR", "JVS", "NDRS", "RNDG", "1001", "PTRH", "JVSC", "RNDGR", "10010", "NDRSR", "PTRHL", "JVSCR", "RNDGRN", "100101", "NDRSRN", "PTRHLM", "JVSCRP", "NDRSRND", "PTRHLMN", "JVSCRPT", "NDRSRNDG", "NDRSRNDGR", "NDRSRNDGRN" });
 }

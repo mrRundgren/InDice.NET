@@ -2,15 +2,15 @@
 using System.Reflection;
 
 namespace InDice.NET;
-public class IndexGenerator : IGenerator
+public class DefaultGenerator : IGenerator
 {
     public IEncoder Encoder { get; set; } = null!;
 
-    public IndexGenerator() {
+    public DefaultGenerator() {
         Encoder = new DefaultEncoder();
     }
 
-    public IndexGenerator(string unsafeChars)
+    public DefaultGenerator(string unsafeChars)
     {
         Encoder = new DefaultEncoder(unsafeChars);
     }
@@ -62,7 +62,7 @@ public class IndexGenerator : IGenerator
                     }
                     else if(!string.IsNullOrEmpty(val?.ToString() ?? ""))
                     {
-                        result = result.Concat(Generate(val?.ToString() ?? "").Where(x => !result.ContainsKey(x.Key))).ToDictionary(_ => _.Key, _ => _.Value);
+                        result = result.Concat(Generate(val!.ToString()!).Where(x => !result.ContainsKey(x.Key))).ToDictionary(_ => _.Key, _ => _.Value);
                     }
                 }
             }
