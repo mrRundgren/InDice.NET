@@ -1,6 +1,6 @@
 namespace InDice.Tests;
 
-public class IndexEncoderTests
+public class DefaultEncoderTests
 {
     [Theory]
     [InlineData("Malmö", "MLM")]
@@ -36,6 +36,22 @@ public class IndexEncoderTests
         //Then
         Assert.Equal(expected, result);
     }
+
+    [Fact]
+    public void DefaultEncoder_has_no_unsafeCharacters()
+    {
+        // Given
+        var encoder = Given_a_default_encoder();
+
+        // When
+        var expected = "";
+        var result = encoder.UnsafeChars;
+
+        // Then
+        Assert.Equal(expected, result);
+    }
+
+    public static IEncoder Given_a_default_encoder() => new DefaultEncoder();
 
     public static IEncoder Given_an_encoder(string? unsafeCharacters = null)
     {

@@ -1,6 +1,6 @@
 ﻿namespace InDice.Tests;
 
-public class IndexGeneratorTests
+public class DefaultGeneratorTests
 {
     [Theory]
     [InlineData("Malmö", new string[] { "M", "ML", "MLM" })]
