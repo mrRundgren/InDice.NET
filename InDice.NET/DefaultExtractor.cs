@@ -23,6 +23,9 @@ namespace InDice.NET
         public IEnumerable<string> ExtractExplicitMatches(string source, out string newSource) =>
             source.ExtractSubStrings(('"', '"'), Encoder, out newSource).Union(newSource.ExtractSubStrings(('+', ' '), Encoder, out newSource));
 
+        public IEnumerable<string> ExtractExcludedMatches(string source, out string newSource) =>
+            source.ExtractSubStrings(('-', ' '), Encoder, out newSource);
+
         public IEnumerable<string> ExtractImplicitMatches(string source, out string newSource)
         {
             string backup = source;
@@ -34,8 +37,5 @@ namespace InDice.NET
             
             return source.Split(' ').Select(_ => Encoder.Encode(_)).Where(_ => !string.IsNullOrWhiteSpace(_));
         }
-
-        public IEnumerable<string> ExtractExcludedMatches(string source, out string newSource) =>
-            source.ExtractSubStrings(('-', ' '), Encoder, out newSource);
     }
 }
