@@ -5,6 +5,7 @@
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
     <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
+    <UserSecretsId>78d289b2-cc7d-41ce-9a5f-7ef1be34b5a1</UserSecretsId>
   </PropertyGroup>
 
     <PropertyGroup Condition=" '$(Version)' == '' ">
@@ -12,4 +13,8 @@
 	    <Version Condition=" '$(VersionSuffix)' != '' ">$(VersionPrefix)-$(VersionSuffix)</Version>
 	    <Version Condition=" '$(Version)' == '' ">$(VersionPrefix)</Version>
     </PropertyGroup>
+
+    <ItemGroup>
+      <PackageReference Include="Microsoft.Extensions.Configuration.UserSecrets" Version="6.0.1" />
+    </ItemGroup>
 </Project>
