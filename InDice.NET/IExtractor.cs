@@ -8,8 +8,8 @@ namespace InDice.NET
 {
     public interface IExtractor
     {
-        IEnumerable<string> ExtractExplicitMatches(string source, out string newSource);
-        IEnumerable<string> ExtractImplicitMatches(string source, out string newSource);
-        IEnumerable<string> ExtractExcludedMatches(string source, out string newSource);
+        IEnumerable<string> ExtractExplicits(string source);
+        IEnumerable<string> ExtractImplicits(string source);
+        IEnumerable<string> ExtractExclusions(string source);
     }
 }

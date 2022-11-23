@@ -14,21 +14,12 @@ public class DefaultExtractor : IExtractor
         Encoder = new DefaultEncoder(unsafeChars);
     }
 
-    public IEnumerable<string> ExtractExplicitMatches(string source, out string newSource) =>
-        source.ExtractSubStrings(('"', '"'), Encoder, out newSource).Union(newSource.ExtractSubStrings(('+', ' '), Encoder, out newSource));
+    public IEnumerable<string> ExtractExplicits(string source) =>
+        source.QualifiedSplit(' ', '"').Where(_ => _.StartsWith('+')).Select(_ => Encoder.Encode(_[1..]));
 
-    public IEnumerable<string> ExtractExcludedMatches(string source, out string newSource) =>
-        source.ExtractSubStrings(('-', ' '), Encoder, out newSource);
+    public IEnumerable<string> ExtractImplicits(string source) =>
+        source.QualifiedSplit(' ', '"').Where(_ => _.StartsWith('-') == false && _.StartsWith('+') == false).Select(_ => Encoder.Encode(_));
 
-    public IEnumerable<string> ExtractImplicitMatches(string source, out string newSource)
-    {
-        string backup = source;
-
-        ExtractExplicitMatches(source, out source);
-        ExtractExcludedMatches(source, out source);
-
-        newSource = backup.Difference(source);
-        
-        return source.Split(' ').Select(_ => Encoder.Encode(_)).Where(_ => !string.IsNullOrWhiteSpace(_));
-    }
+    public IEnumerable<string> ExtractExclusions(string source) =>
+        source.QualifiedSplit(' ', '"').Where(_ => _.StartsWith('-')).Select(_ => Encoder.Encode(_[1..]));
 }
