@@ -9,20 +9,16 @@
   </PropertyGroup>
 
     <PropertyGroup Condition=" '$(Version)' == '' ">
-	    <VersionPrefix Condition=" '$(VersionPrefix)' == '' ">1.0.8</VersionPrefix>
+	    <VersionPrefix Condition=" '$(VersionPrefix)' == '' ">1.0.9</VersionPrefix>
 	    <Version Condition=" '$(VersionSuffix)' != '' ">$(VersionPrefix)-$(VersionSuffix)</Version>
 	    <Version Condition=" '$(Version)' == '' ">$(VersionPrefix)</Version>
     </PropertyGroup>
-
-    <ItemGroup>
-      <PackageReference Include="Microsoft.Extensions.Configuration.UserSecrets" Version="7.0.0" />
-    </ItemGroup>
 
 	<PropertyGroup>
 		<OutputType>library</OutputType>
 		<TargetFramework>netcoreapp6.0</TargetFramework>
 		<PackageId>InDice.NET</PackageId>
-		<Version>1.0.8</Version>
+		<Version>1.0.9</Version>
 		<Authors>Anders Rundgren</Authors>
 		<Company>Elicit</Company>
 		<PackageDescription>Auto generate indexes for objects!</PackageDescription>
