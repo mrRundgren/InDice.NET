@@ -19,7 +19,7 @@
     </ItemGroup>
 
 	<PropertyGroup>
-		<OutputType>Dll</OutputType>
+		<OutputType>library</OutputType>
 		<TargetFramework>netcoreapp6.0</TargetFramework>
 		<PackageId>InDice.NET</PackageId>
 		<Version>1.0.6</Version>

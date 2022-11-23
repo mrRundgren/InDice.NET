@@ -82,7 +82,21 @@ public class DefaultExtractorTests
     public void An_extractor_with_unsafe_chars_encodes_correctly(string source, string[] expected)
     {
         // Given 
-        var (extractor, unsafeChars) = Given_an_extractor_and_unsafe_chars();
+        var (extractor, _) = Given_an_extractor_and_unsafe_chars();
+
+        // When
+        var result = extractor.ExtractImplicits(source);
+
+        // Then
+        Assert.Equal(expected, result);
+    }
+
+    [Theory]
+    [InlineData("The Anders", new string[] { "NDRS" })]
+    public void Excluded_words_are_not_included(string source, string[] expected)
+    {
+        // Given 
+        var extractor = Given_an_extractor_and_excluded_words();
 
         // When
         var result = extractor.ExtractImplicits(source);
@@ -96,4 +110,7 @@ public class DefaultExtractorTests
 
     public static (IExtractor extractor, string unsafeChars) Given_an_extractor_and_unsafe_chars() =>
         (new DefaultExtractor("AOUÅEIYÄÖ"), "AOUÅEIYÄÖ");
+
+    public static IExtractor Given_an_extractor_and_excluded_words() =>
+        new DefaultExtractor("AOUÅEIYÄÖ", new string[] {"The"});
 }
