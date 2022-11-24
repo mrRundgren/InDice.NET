@@ -2,6 +2,15 @@
 
 public static class StringExtensions
 {
+    public static IEnumerable<string> ExtractExplicits(this string source, IEncoder? encoder = null) =>
+        source.QualifiedSplit(' ', '"').Where(_ => _.StartsWith('+')).Select(_ => encoder != null ? encoder.Encode(_[1..]) : _[1..]);
+
+    public static IEnumerable<string> ExtractImplicits(this string source, IEncoder? encoder = null) =>
+        source.QualifiedSplit(' ', '"').Where(_ => _.StartsWith('-') == false && _.StartsWith('+') == false).Select(_ => encoder != null ? encoder.Encode(_) : _);
+
+    public static IEnumerable<string> ExtractExclusions(this string source, IEncoder? encoder = null) =>
+        source.QualifiedSplit(' ', '"').Where(_ => _.StartsWith('-')).Select(_ => encoder != null ? encoder.Encode(_[1..]) : _[1..]);
+
     public static IEnumerable<string> QualifiedSplit(this string source, char delimiter, char qualifier)
     {
         if (string.IsNullOrWhiteSpace(source))
