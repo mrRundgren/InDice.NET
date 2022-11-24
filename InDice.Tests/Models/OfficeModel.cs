@@ -5,9 +5,9 @@ public class OfficeModel
 {
     public Guid Id { get; init; } = Guid.NewGuid();
 
-    [InDiceGenerate]
+    [InDiceInclude]
     public string Name { get; set; } = string.Empty;
 
-    [InDiceGenerate]
+    [InDiceInclude]
     public Manager? Manager { get; set; }
 }

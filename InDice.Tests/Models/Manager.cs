@@ -3,6 +3,6 @@
 [InDiceEntity]
 public class Manager
 {
-    [InDiceGenerate]
+    [InDiceInclude]
     public string Name { get; set; } = null!;
 }

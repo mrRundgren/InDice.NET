@@ -35,7 +35,7 @@ public class DefaultGenerator : IGenerator
 
     public Dictionary<string, string> Generate<T>(T entity) where T : class
     {
-        IEnumerable<PropertyInfo> properties = entity.GetType().GetProperties().Where(prop => prop.IsDefined(typeof(InDiceGenerateAttribute), false));
+        IEnumerable<PropertyInfo> properties = entity.GetType().GetProperties().Where(prop => prop.IsDefined(typeof(InDiceIncludeAttribute), false));
         Dictionary<string, string> result = new();
 
         foreach (var prop in properties)

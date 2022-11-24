@@ -1,4 +1,4 @@
 ﻿namespace InDice.NET;
 
 [AttributeUsage(AttributeTargets.Property)]
-public class InDiceGenerateAttribute : Attribute { }
+public class InDiceIncludeAttribute : Attribute { }

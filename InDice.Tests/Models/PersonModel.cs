@@ -4,20 +4,20 @@
 public class PersonModel
 {
     public Guid Id { get; init; } = Guid.NewGuid();
-    [InDiceGenerate]
+    [InDiceInclude]
     public string Firstname { get; set; } = string.Empty;
-    [InDiceGenerate]
+    [InDiceInclude]
     public string Lastname { get; set; } = string.Empty;
-    [InDiceGenerate]
+    [InDiceInclude]
     public int HiringNo { get; set; }
-    [InDiceGenerate]
+    [InDiceInclude]
     public string DisplayName
     {
         get => $"{Firstname} {Lastname}";
     }
-    [InDiceGenerate]
+    [InDiceInclude]
     public OfficeModel? Office { get; set; } = null;
 
-    [InDiceGenerate]
+    [InDiceInclude]
     public List<FieldModel> Fields {get; set;} = new ();
 }
