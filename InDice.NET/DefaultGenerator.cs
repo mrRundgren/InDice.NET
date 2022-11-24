@@ -1,7 +1,5 @@
-﻿using System.Collections;
-using System.Reflection;
+﻿namespace InDice.NET;
 
-namespace InDice.NET;
 public class DefaultGenerator : IGenerator
 {
     public IEncoder Encoder { get; set; } = null!;

@@ -1,8 +1,7 @@
-﻿namespace InDice.Tests.Models
+﻿namespace InDice.Tests.Models;
+
+[InDiceEntity]
+public class FieldModel
 {
-    [InDiceEntity]
-    public class FieldModel
-    {
-        [InDiceGenerate] public string Name { get; set; } = null!;
-    }
+    [InDiceGenerate] public string Name { get; set; } = null!;
 }

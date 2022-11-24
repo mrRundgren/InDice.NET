@@ -1,4 +1,5 @@
 ﻿namespace InDice.NET;
+
 public class DefaultEncoder : IEncoder
 {
     public string UnsafeChars { get; set; } = "";
