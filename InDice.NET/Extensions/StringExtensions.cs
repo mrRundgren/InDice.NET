@@ -1,7 +1,38 @@
-﻿namespace InDice.NET;
+﻿using static System.Formats.Asn1.AsnWriter;
+
+namespace InDice.NET;
 
 public static class StringExtensions
 {
+    public static string ToMatchedString(this string source, string index) =>
+        ToMatchedString(source, index, ('[', ']'));
+
+    public static string ToMatchedString(this string source, string index, (char lead, char trail) delimiters)
+    {
+        var stack = new Stack(index.Reverse().ToArray());
+        int end = 0;
+
+        for(int i = 0; i < source.ToArray().Length; i++)
+        {
+            if(stack.Count > 0)
+            {
+                end = i + 1;
+                if (char.ToUpperInvariant(source[i]).Equals(stack.Peek()))
+                {
+                    stack.Pop();
+                    continue;
+                }
+            }
+            else
+            {
+                end = i;
+                break;
+            }
+        }
+
+        return string.Concat(delimiters.lead, source.Insert(end, delimiters.trail.ToString()));
+    }
+
     public static IEnumerable<string> ExtractExplicits(this string source, IEncoder? encoder = null) =>
         source.QualifiedSplit(' ', '"').Where(_ => _.StartsWith('+')).Select(_ => encoder != null ? encoder.Encode(_[1..]) : _[1..]);
 

@@ -129,6 +129,24 @@ public class StringExtensionsTests
         Assert.Equal(expected, result);
     }
 
+    [Theory]
+    [InlineData("ANDERS", "Anders", "[Anders]")]
+    [InlineData("ANDER", "Anders", "[Ander]s")]
+    [InlineData("ANDE", "Anders", "[Ande]rs")]
+    [InlineData("AND", "Anders", "[And]ers")]
+    [InlineData("NDRS", "Anders", "[Anders]")]
+    [InlineData("NDR", "Anders", "[Ander]s")]
+    [InlineData("ND", "Anders", "[And]ers")]
+    [InlineData("N", "Anders", "[An]ders")]
+    public void Index_can_be_matched_to_source_string(string index, string source, string expected)
+    {
+        // When
+        var result = source.ToMatchedString(index);
+
+        // Then
+        Assert.Equal(expected, result);
+    }
+
     public static IEncoder Given_an_encoder() =>
         new DefaultEncoder();
 }

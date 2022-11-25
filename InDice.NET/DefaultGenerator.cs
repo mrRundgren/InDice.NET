@@ -1,4 +1,7 @@
-﻿namespace InDice.NET;
+﻿using InDice.NET.Models;
+using System.Security.Cryptography.X509Certificates;
+
+namespace InDice.NET;
 
 public class DefaultGenerator : IGenerator
 {
@@ -13,9 +16,9 @@ public class DefaultGenerator : IGenerator
         Encoder = new DefaultEncoder(unsafeChars);
     }
 
-    public Dictionary<string, string> Generate(params string[] keywords)
+    public IEnumerable<string> Generate(params string[] keywords)
     {
-        Dictionary<string, string> result = new();
+        List<string> result = new();
 
         foreach (var keyword in keywords)
         {
@@ -25,7 +28,7 @@ public class DefaultGenerator : IGenerator
 
                 for (int i = 0; i < encoded.Length; i++)
                 {
-                    result.Add(encoded[..(i + 1)], keyword);
+                    result.Add(encoded[..(i + 1)]);
                 }
             }
         }
@@ -33,10 +36,10 @@ public class DefaultGenerator : IGenerator
         return result;
     }
 
-    public Dictionary<string, string> Generate<T>(T entity) where T : class
+    public IEnumerable<Keyword> GenerateFor<T>(T entity) where T : class
     {
         IEnumerable<PropertyInfo> properties = entity.GetType().GetProperties().Where(prop => prop.IsDefined(typeof(InDiceIncludeAttribute), false));
-        Dictionary<string, string> result = new();
+        List<Keyword> result = new List<Keyword>();
 
         foreach (var prop in properties)
         {
@@ -47,7 +50,7 @@ public class DefaultGenerator : IGenerator
                 
                 if (isEntity)
                 {
-                    result = result.Concat(Generate(val!).Where(x => !result.ContainsKey(x.Key))).ToDictionary(_ => _.Key, _ => _.Value);
+                    result = result.Concat(GenerateFor(val!).Where(x => !result.Any(r => r.Index.Equals(x.Index)))).ToList();
                 }
                 else
                 {
@@ -55,17 +58,23 @@ public class DefaultGenerator : IGenerator
                     {
                         foreach (var item in list)
                         {
-                            result = result.Concat(Generate(item).Where(x => !result.ContainsKey(x.Key))).ToDictionary(_ => _.Key, _ => _.Value);
+                            result = result.Concat(GenerateFor(item).Where(x => !result.Any(r => r.Index.Equals(x.Index)))).ToList();
                         }
                     }
                     else if(!string.IsNullOrEmpty(val?.ToString() ?? ""))
                     {
-                        result = result.Concat(Generate(val!.ToString()!).Where(x => !result.ContainsKey(x.Key))).ToDictionary(_ => _.Key, _ => _.Value);
+                        var originalText = val!.ToString()!;
+                        result = result.Concat(Generate(originalText)
+                            .Select(_ => new Keyword { 
+                                Index = _, 
+                                OriginalText = originalText, 
+                                PropertyName = prop.Name })
+                            .Where(x => !result.Any(r => r.Index.Equals(x.Index)))).ToList();
                     }
                 }
             }
         }
 
-        return result.OrderBy(_ => _.Key.Length).ToDictionary(_ => _.Key, _ => _.Value);
+        return result.OrderBy(_ => _.Index.Length);
     }
 }
