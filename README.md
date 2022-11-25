@@ -1,8 +1,4 @@
 # InDice.NET
-InDice.NET is a library that aims to simplify the creation off keywords for entities. This is achieved by applying the InDiceEntity attribute to a class, and marking properties to include with the InDiceGenerate attribute.
-
-
-# InDice.NET
 
 InDice.NET is a c# library to aid in generating keywords for poco classes.
 
@@ -13,6 +9,8 @@ Use the package manager [nuget](https://www.nuget.org/packages/InDice.NET/) to i
 ## Usage
 
 Create a class with the "InDiceEntity" attribute, tag properties you want to generate keywords for with the attribute "InDiceInclude"
+
+### DefaultGenerator
 
 ```c#
 [InDiceEntity]
@@ -34,6 +32,13 @@ Then just run the Generate method on an instance of the object.
 
 ```c#
 var keywords = new DefaultGenerator().Generate(person);
+```
+### DefaultEncoder
+
+The DefaultEncoder used by DefaultGenerator will remove any non letters or numbers aswell as making the string all uppercase, if you need to remove other special characters, for instance wovels this can be achieved by simply adding a string (case insensitive) containing them to the constructor of the generator.
+
+```c#
+var keywords = new DefaultGenerator("AOUÅEIYÄÖ").Generate(person);
 ```
 
 ## License
