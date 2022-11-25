@@ -1,4 +1,6 @@
-﻿namespace InDice.Tests;
+﻿using System.Reflection.Metadata.Ecma335;
+
+namespace InDice.Tests;
 
 public class DefaultGeneratorTests
 {
@@ -159,8 +161,29 @@ public class DefaultGeneratorTests
         Assert.NotNull(result);
     }
 
+    [Theory]
+    [InlineData("the 40 year-old virgin", new string[] { "T", "4", "Y", "V", "TH", "40", "YE", "VI", "THE", "40Y", "YEA", "VIR", "THE4", "40YE", "YEAR", "VIRG", "THE40", "40YEA", "YEARO", "VIRGI", "THE40Y", "40YEAR", "YEAROL", "VIRGIN", "THE40YE", "40YEARO", "YEAROLD", "THE40YEA", "40YEAROL", "YEAROLDV", "THE40YEAR", "40YEAROLD", "YEAROLDVI", "THE40YEARO", "40YEAROLDV", "YEAROLDVIR", "THE40YEAROL", "40YEAROLDVI", "YEAROLDVIRG", "THE40YEAROLD", "40YEAROLDVIR", "YEAROLDVIRGI", "THE40YEAROLDV", "40YEAROLDVIRG", "YEAROLDVIRGIN", "THE40YEAROLDVI", "40YEAROLDVIRGI", "THE40YEAROLDVIR", "40YEAROLDVIRGIN", "THE40YEAROLDVIRG", "THE40YEAROLDVIRGI", "THE40YEAROLDVIRGIN" })]
+    public void Generating_for_property_with_mode_split_generates_correct_keywords(string title, string[] expected)
+    {
+        // Given
+        var generator = Given_a_default_generator();
+        var model = new SplitModel { Title = title };
+
+        // When
+        var result = generator.GenerateFor(model).Select(_ => _.Index);
+
+        // Then
+        Assert.Equal(expected, result);
+        Assert.NotNull(result.Single(_ => _.Equals("THE40")));
+        Assert.NotNull(result.Single(_ => _.Equals("VIRGIN")));
+        Assert.NotNull(result.Single(_ => _.Equals("YEAROLD")));
+    }
+
     public static IGenerator Given_a_default_generator() =>
         new DefaultGenerator();
+
+    public static (IGenerator generator, SplitModel model) Given_a_default_generator_and_a_model() =>
+        (new DefaultGenerator(), new SplitModel { Title = "The 40 year-old virgin" });
 
     public static IGenerator Given_a_generator() =>
         new DefaultGenerator("AOUÅEIYÄÖ");

@@ -33,7 +33,7 @@ public class DefaultGenerator : IGenerator
             }
         }
         
-        return result;
+        return result.Distinct();
     }
 
     public IEnumerable<Keyword> GenerateFor<T>(T entity) where T : class
@@ -43,6 +43,9 @@ public class DefaultGenerator : IGenerator
 
         foreach (var prop in properties)
         {
+            var attribute = prop.GetCustomAttribute<InDiceIncludeAttribute>()!;
+            var mode = attribute.Mode;
+
             if(prop != null)
             {
                 var val = prop.GetValue(entity);
@@ -63,13 +66,29 @@ public class DefaultGenerator : IGenerator
                     }
                     else if(!string.IsNullOrEmpty(val?.ToString() ?? ""))
                     {
-                        var originalText = val!.ToString()!;
-                        result = result.Concat(Generate(originalText)
-                            .Select(_ => new Keyword { 
-                                Index = _, 
-                                OriginalText = originalText, 
-                                PropertyName = prop.Name })
-                            .Where(x => !result.Any(r => r.Index.Equals(x.Index)))).ToList();
+                        string originalText = val!.ToString()!;
+                        List<string> words = new List<string>();
+
+                        if (mode == InDiceGenerateMode.SplitOnWords)
+                        {
+                            var subs = originalText.Split(' ');
+                            for(int i = 0; i < subs.Length; i++)
+                            {
+                                words.Add(string.Join("", subs.Skip(i)));
+                            }
+                        }
+                        else
+                        {
+                            words.Add(originalText);
+                        }
+
+                        result = result.Union(Generate(words.ToArray())
+                            .Select(_ => new Keyword
+                            {
+                                Index = _,
+                                OriginalText = originalText,
+                                PropertyName = prop.Name
+                            }).Where(x => !result.Any(r => r.Index.Equals(x.Index)))).ToList();
                     }
                 }
             }
