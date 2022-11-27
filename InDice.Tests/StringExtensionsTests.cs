@@ -130,6 +130,18 @@ public class StringExtensionsTests
     }
 
     [Theory]
+    [InlineData("anders rundgren", "\"anders rundgren\"")]
+    [InlineData("anders rundgren +human", "anders rundgren +human")]
+    public void Search_string_is_transformed_correctly(string source, string expected)
+    {
+        // When
+        var result = source.ToSearchString();
+
+        // Then
+        Assert.Equal(expected, result);
+    }
+
+    [Theory]
     [InlineData("ANDERS", "Anders", "[Anders]")]
     [InlineData("ANDER", "Anders", "[Ander]s")]
     [InlineData("ANDE", "Anders", "[Ande]rs")]

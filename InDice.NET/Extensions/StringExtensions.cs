@@ -33,6 +33,16 @@ public static class StringExtensions
         return string.Concat(delimiters.lead, source.Insert(end, delimiters.trail.ToString()));
     }
 
+    public static string ToSearchString(this string source)
+    {
+        if (!source.Any(_ => "+-\"".Contains(_)))
+        {
+            source = $"\"{source}\"";
+        }
+
+        return source;
+    }
+
     public static IEnumerable<string> ExtractExplicits(this string source, IEncoder? encoder = null) =>
         source.QualifiedSplit(' ', '"').Where(_ => _.StartsWith('+')).Select(_ => encoder != null ? encoder.Encode(_[1..]) : _[1..]);
 
