@@ -15,7 +15,7 @@ public static class StringExtensions
 
             foreach (var word in source.Split(' '))
             {
-                result.Add(word!.ToMatchedString(index));
+                result.Add(word!.ToMatchedString(index, delimiters));
             }
 
             return string.Join(" ", result);
