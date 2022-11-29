@@ -150,6 +150,11 @@ public class StringExtensionsTests
     [InlineData("NDR", "Anders", "[Ander]s")]
     [InlineData("ND", "Anders", "[And]ers")]
     [InlineData("N", "Anders", "[An]ders")]
+    [InlineData("VRLD", "Hej världen", "Hej [värld]en")]
+    [InlineData("TST", "This is a very good test", "This is a very good [test]")]
+    [InlineData("ONE", "One, two, three", "[One], two, three")]
+    [InlineData("TWO", "One, two, three", "One, [two], three")]
+    [InlineData("THREE", "One, two, three", "One, two, [three]")]
     public void Index_can_be_matched_to_source_string(string index, string source, string expected)
     {
         // When

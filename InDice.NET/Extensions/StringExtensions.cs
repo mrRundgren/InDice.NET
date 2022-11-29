@@ -9,28 +9,51 @@ public static class StringExtensions
 
     public static string ToMatchedString(this string source, string index, (char lead, char trail) delimiters)
     {
-        var stack = new Stack(index.Reverse().ToArray());
-        int end = 0;
-
-        for(int i = 0; i < source.ToArray().Length; i++)
+        if(source.Split(' ').Length > 1)
         {
-            if(stack.Count > 0)
+            List<string> result = new();
+
+            foreach (var word in source.Split(' '))
             {
-                end = i + 1;
-                if (char.ToUpperInvariant(source[i]).Equals(stack.Peek()))
+                result.Add(word!.ToMatchedString(index));
+            }
+
+            return string.Join(" ", result);
+        }
+        else
+        {
+            var stack = new Stack(index.Reverse().ToArray());
+            int end = 0;
+            bool found = false;
+
+            for (int i = 0; i < source.ToArray().Length; i++)
+            {
+                if (stack.Count > 0)
                 {
-                    stack.Pop();
-                    continue;
+                    end = i + 1;
+                    if (char.ToUpperInvariant(source[i]).Equals(stack.Peek()))
+                    {
+                        stack.Pop();
+                        found = true;
+                        continue;
+                    }
                 }
+                else
+                {
+                    end = i;
+                    break;
+                }
+            }
+
+            if(found && stack.Count == 0)
+            {
+                return string.Concat(delimiters.lead, source.Insert(end, delimiters.trail.ToString()));
             }
             else
             {
-                end = i;
-                break;
+                return source;
             }
         }
-
-        return string.Concat(delimiters.lead, source.Insert(end, delimiters.trail.ToString()));
     }
 
     public static string ToSearchString(this string source)
