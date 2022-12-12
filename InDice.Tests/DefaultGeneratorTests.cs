@@ -193,12 +193,12 @@ public class DefaultGeneratorTests
 
         // Then
         Assert.Equal(expected, result);
-        Assert.NotNull(result.Single(_ => _.Equals("PERH")));
-        Assert.NotNull(result.Single(_ => _.Equals("PERHANSSON")));
-        Assert.NotNull(result.Single(_ => _.Equals("HANSSONPER")));
         Assert.NotNull(result.Single(_ => _.Equals("PE")));
         Assert.NotNull(result.Single(_ => _.Equals("HA")));
         Assert.NotNull(result.Single(_ => _.Equals("PER")));
+        Assert.NotNull(result.Single(_ => _.Equals("PERH")));
+        Assert.NotNull(result.Single(_ => _.Equals("PERHANSSON")));
+        Assert.NotNull(result.Single(_ => _.Equals("HANSSONPER")));
         Assert.NotNull(result.Single(_ => _.Equals("PERHANSSON")));
     }
 
