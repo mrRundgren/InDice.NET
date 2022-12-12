@@ -199,7 +199,6 @@ public class DefaultGeneratorTests
         Assert.NotNull(result.Single(_ => _.Equals("PERH")));
         Assert.NotNull(result.Single(_ => _.Equals("PERHANSSON")));
         Assert.NotNull(result.Single(_ => _.Equals("HANSSONPER")));
-        Assert.NotNull(result.Single(_ => _.Equals("PERHANSSON")));
     }
 
     public static IGenerator Given_a_default_generator() =>

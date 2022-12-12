@@ -9,7 +9,7 @@ namespace InDice.Tests.Models
     [InDiceEntity]
     public class SplitModel
     {
-        [InDiceInclude(InDiceGenerateMode.SplitOnWords, false)]
+        [InDiceInclude(InDiceGenerateMode.SplitOnWords)]
         public string Title { get; set; } = null!;
     }
 
