@@ -9,7 +9,14 @@ namespace InDice.Tests.Models
     [InDiceEntity]
     public class SplitModel
     {
-        [InDiceInclude(InDiceGenerateMode.SplitOnWords)]
+        [InDiceInclude(InDiceGenerateMode.SplitOnWords, false)]
+        public string Title { get; set; } = null!;
+    }
+
+    [InDiceEntity]
+    public class SplitModelThatIncludesReverseOrder
+    {
+        [InDiceInclude(InDiceGenerateMode.SplitOnWords, true)]
         public string Title { get; set; } = null!;
     }
 }

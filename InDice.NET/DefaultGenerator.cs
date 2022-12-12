@@ -45,6 +45,7 @@ public class DefaultGenerator : IGenerator
         {
             var attribute = prop.GetCustomAttribute<InDiceIncludeAttribute>()!;
             var mode = attribute.Mode;
+            var includeReverse = attribute.IncludeReverseOrder;
 
             if(prop != null)
             {
@@ -75,6 +76,15 @@ public class DefaultGenerator : IGenerator
                             for(int i = 0; i < subs.Length; i++)
                             {
                                 words.Add(string.Join("", subs.Skip(i)));
+                            }
+
+                            if(includeReverse)
+                            {
+                                var reverse = subs.Reverse();
+                                for (int i = 0; i < subs.Length; i++)
+                                {
+                                    words.Add(string.Join("", reverse.Skip(i)));
+                                }
                             }
                         }
                         else

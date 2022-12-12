@@ -1,4 +1,5 @@
 ﻿using System.Reflection.Metadata.Ecma335;
+using System.Runtime.ConstrainedExecution;
 
 namespace InDice.Tests;
 
@@ -177,6 +178,28 @@ public class DefaultGeneratorTests
         Assert.NotNull(result.Single(_ => _.Equals("THE40")));
         Assert.NotNull(result.Single(_ => _.Equals("VIRGIN")));
         Assert.NotNull(result.Single(_ => _.Equals("YEAROLD")));
+    }
+
+    [Theory]
+    [InlineData("Per Hansson", new string[] { "P", "H", "PE", "HA", "PER", "HAN", "PERH", "HANS", "PERHA", "HANSS", "PERHAN", "HANSSO", "PERHANS", "HANSSON", "PERHANSS", "HANSSONP", "PERHANSSO", "HANSSONPE", "PERHANSSON", "HANSSONPER" })]
+    public void Generating_for_property_with_mode_split_and_both_includes_generates_correct_keywords(string title, string[] expected)
+    {
+        // Given
+        var generator = Given_a_default_generator();
+        var model = new SplitModelThatIncludesReverseOrder { Title = title };
+
+        // When
+        var result = generator.GenerateFor(model).Select(_ => _.Index);
+
+        // Then
+        Assert.Equal(expected, result);
+        Assert.NotNull(result.Single(_ => _.Equals("PERH")));
+        Assert.NotNull(result.Single(_ => _.Equals("PERHANSSON")));
+        Assert.NotNull(result.Single(_ => _.Equals("HANSSONPER")));
+        Assert.NotNull(result.Single(_ => _.Equals("PE")));
+        Assert.NotNull(result.Single(_ => _.Equals("HA")));
+        Assert.NotNull(result.Single(_ => _.Equals("PER")));
+        Assert.NotNull(result.Single(_ => _.Equals("PERHANSSON")));
     }
 
     public static IGenerator Given_a_default_generator() =>
