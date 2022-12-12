@@ -178,6 +178,7 @@ public class DefaultGeneratorTests
         Assert.NotNull(result.Single(_ => _.Equals("THE40")));
         Assert.NotNull(result.Single(_ => _.Equals("VIRGIN")));
         Assert.NotNull(result.Single(_ => _.Equals("YEAROLD")));
+        Assert.Null(result.SingleOrDefault(_ => _.Equals("OLDYEAR")));
     }
 
     [Theory]
