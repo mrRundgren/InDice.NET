@@ -132,10 +132,10 @@ public class StringExtensionsTests
     [Theory]
     [InlineData("anders rundgren", "\"anders rundgren\"")]
     [InlineData("anders rundgren +human", "anders rundgren +human")]
-    public void Search_string_is_transformed_correctly(string source, string expected)
+    public void Absolute_string_is_transformed_correctly(string source, string expected)
     {
         // When
-        var result = source.ToSearchString();
+        var result = source.ToAbsoluteString();
 
         // Then
         Assert.Equal(expected, result);

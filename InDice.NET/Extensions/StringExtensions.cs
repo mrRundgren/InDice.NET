@@ -56,7 +56,7 @@ public static class StringExtensions
         }
     }
 
-    public static string ToSearchString(this string source)
+    public static string ToAbsoluteString(this string source)
     {
         if (!source.Any(_ => "+-\"".Contains(_)))
         {
