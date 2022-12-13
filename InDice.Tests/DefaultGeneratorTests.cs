@@ -183,7 +183,7 @@ public class DefaultGeneratorTests
 
     [Theory]
     [InlineData("Per Hansson", new string[] { "P", "H", "PE", "HA", "PER", "HAN", "PERH", "HANS", "PERHA", "HANSS", "PERHAN", "HANSSO", "PERHANS", "HANSSON", "PERHANSS", "HANSSONP", "PERHANSSO", "HANSSONPE", "PERHANSSON", "HANSSONPER" })]
-    public void Generating_for_property_with_mode_split_and_both_includes_generates_correct_keywords(string title, string[] expected)
+    public void Generating_for_property_with_mode_split_and_reverse_generates_correct_keywords(string title, string[] expected)
     {
         // Given
         var generator = Given_a_default_generator();
@@ -201,6 +201,31 @@ public class DefaultGeneratorTests
         Assert.NotNull(result.Single(_ => _.Equals("PERHANSSON")));
         Assert.NotNull(result.Single(_ => _.Equals("HANSSONPER")));
     }
+
+    [Theory]
+    [InlineData("Per Hansson Eslöv", new string[] { "P", "H", "E", "PE", "HA", "ES", "PER", "HAN", "ESL", "PERH", "HANS", "ESLÖ", "PERHA", "HANSS", "ESLÖV", "PERHAN", "HANSSO", "ESLÖVH", "PERHANS", "HANSSON", "ESLÖVHA", "PERHANSS", "HANSSONE", "ESLÖVHAN", "HANSSONP", "PERHANSSO", "HANSSONES", "ESLÖVHANS", "HANSSONPE", "PERHANSSON", "HANSSONESL", "ESLÖVHANSS", "HANSSONPER", "PERHANSSONE", "HANSSONESLÖ", "ESLÖVHANSSO", "PERHANSSONES", "HANSSONESLÖV", "ESLÖVHANSSON", "PERHANSSONESL", "ESLÖVHANSSONP", "PERHANSSONESLÖ", "ESLÖVHANSSONPE", "PERHANSSONESLÖV", "ESLÖVHANSSONPER" })]
+    public void Generating_for_property_with_mode_split_and_reverse_with_three_words_generates_correct_keywords(string title, string[] expected)
+    {
+        // Given
+        var generator = Given_a_default_generator();
+        var model = new SplitModelThatIncludesReverseOrder { Title = title };
+
+        // When
+        var result = generator.GenerateFor(model).Select(_ => _.Index);
+
+        // Then
+        Assert.Equal(expected, result);
+        Assert.NotNull(result.Single(_ => _.Equals("PE")));
+        Assert.NotNull(result.Single(_ => _.Equals("HA")));
+        Assert.NotNull(result.Single(_ => _.Equals("PER")));
+        Assert.NotNull(result.Single(_ => _.Equals("PERH")));
+        Assert.NotNull(result.Single(_ => _.Equals("PERHANSSON")));
+        Assert.NotNull(result.Single(_ => _.Equals("HANSSONPER")));
+        Assert.NotNull(result.Single(_ => _.Equals("HANSSONESLÖV")));
+        Assert.NotNull(result.Single(_ => _.Equals("ESLÖVHANSSON")));
+        Assert.Null(result.Single(_ => _.Equals("PERESLÖV")));
+    }
+
 
     public static IGenerator Given_a_default_generator() =>
         new DefaultGenerator();
