@@ -17,11 +17,9 @@ Create a class with the "InDiceEntity" attribute, tag properties you want to gen
 public class PersonModel
 {
     public Guid Id { get; init; } = Guid.NewGuid();
-    [InDiceInclude]
     public string Firstname { get; set; } = string.Empty;
-    [InDiceInclude]
     public string Lastname { get; set; } = string.Empty;
-    [InDiceInclude]
+    [InDiceInclude(InDiceGenerateMode.SplitOnWords, true)]
     public string DisplayName
     {
         get => $"{Firstname} {Lastname}";
