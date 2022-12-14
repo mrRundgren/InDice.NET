@@ -29,7 +29,7 @@ public class PersonModel
 Then just run the Generate method on an instance of the object.
 
 ```c#
-var keywords = new DefaultGenerator().Generate(person);
+var keywords = new DefaultGenerator().GenerateFor(person);
 ```
 ### DefaultEncoder
 
