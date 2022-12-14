@@ -108,6 +108,26 @@ public class DefaultGeneratorTests
         Assert.Equal(originalText, result.First().Match);
     }
 
+    [Theory]
+    [InlineData("An", 5, 0.17)]
+    [InlineData("Anders", 2, 0.67)]
+    [InlineData("Ander", 3, 0.5)]
+    [InlineData("Rundgren", 2, 0.75)]
+    public void Generating_keywords_calculates_levenshtein_distance_and_similarity(string source, int levenshteinDistance, double similarity)
+    {
+        // Given
+        var (person, generator, _) = Given_a_person_with_manager_and_a_generator_and_an_expected_result();
+        var index = generator.Encoder.Encode(source);
+
+        // When
+        var result = generator.GenerateFor(person);
+        var match = result.First(_ => _.Index == index);
+
+        // Then
+        Assert.Equal(levenshteinDistance, match.LevenshteinDistance);
+        Assert.Equal(similarity, match.Similarity);
+    }
+
     [Fact]
     public void Generator_has_default_encoder()
     {

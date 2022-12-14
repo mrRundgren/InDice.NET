@@ -12,5 +12,7 @@ namespace InDice.NET.Models
         public string OriginalText { get; set; } = null!;
         public string PropertyName { get; set; } = null!;
         public string Match { get => OriginalText.ToMatchedString(Index); }
+        public int LevenshteinDistance { get => OriginalText.ToLevenshteinDistance(Index); }
+        public double Similarity { get => OriginalText.ToSimilarity(Index); }
     }
 }

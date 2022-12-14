@@ -164,6 +164,42 @@ public class StringExtensionsTests
         Assert.Equal(expected, result);
     }
 
+    [Theory]
+    [InlineData("anders", "Anders", 0)]
+    [InlineData("Good will hunting", "hunting", 8)]
+    [InlineData("Enter the matrix", "the", 11)]
+    [InlineData("", "the", 3)]
+    [InlineData("the", "", 3)]
+    [InlineData("", "", 0)]
+    [InlineData("the", "the", 0)]
+    [InlineData("a string", "", 7)]
+    [InlineData("", "a string", 7)]
+    public void Levenshtein_distance_can_be_calculated(string source, string target, int expected)
+    {
+        // When
+        var result = StringExtensions.ToLevenshteinDistance(source, target);
+
+        // Then
+        Assert.Equal(expected, result);
+    }
+
+    [Theory]
+    [InlineData("anders", "Anders", 1)]
+    [InlineData("good will hunting", "HuNtinG", 0.47)]
+    [InlineData("enter the matrix", "the", 0.21)]
+    [InlineData("", "the", 0)]
+    [InlineData("the", "", 0)]
+    [InlineData("", "", 1)]
+    [InlineData("The", "the", 1)]
+    public void Similarity_can_be_calculated(string source, string target, double expected)
+    {
+        // When
+        var result = StringExtensions.ToSimilarity(source, target);
+
+        // Then
+        Assert.Equal(expected, result);
+    }
+
     public static IEncoder Given_an_encoder() =>
         new DefaultEncoder();
 }
