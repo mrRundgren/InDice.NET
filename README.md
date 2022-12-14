@@ -38,7 +38,7 @@ var keywords = new DefaultGenerator().Generate(person);
 The DefaultEncoder used by DefaultGenerator will remove any non letters or numbers aswell as making the string all uppercase, if you need to remove other special characters, for instance wovels this can be achieved by simply adding a string (case insensitive) containing them to the constructor of the generator.
 
 ```c#
-var keywords = new DefaultGenerator("AOUÅEIYÄÖ").Generate(person);
+var keywords = new DefaultGenerator("AOUÅEIYÄÖ").GenerateFor(person);
 ```
 
 ## License
