@@ -6,9 +6,7 @@ public class DefaultGenerator : IGenerator
 {
     public IEncoder Encoder { get; set; } = null!;
 
-    public DefaultGenerator() {
-        Encoder = new DefaultEncoder();
-    }
+    public DefaultGenerator() : this(string.Empty) { }
 
     public DefaultGenerator(string unsafeChars)
     {

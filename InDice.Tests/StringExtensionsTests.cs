@@ -15,7 +15,7 @@ public class StringExtensionsTests
         // When
         var result = source.QualifiedSplit(' ', '"');
 
-        // Then
+        // Thenb
         Assert.Equal(expected, result);
     }
 
