@@ -1,6 +1,4 @@
-﻿using static System.Formats.Asn1.AsnWriter;
-
-namespace InDice.NET;
+﻿namespace InDice.NET;
 
 public static class StringExtensions
 {
