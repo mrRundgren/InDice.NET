@@ -109,10 +109,10 @@ public class DefaultGeneratorTests
     }
 
     [Theory]
-    [InlineData("An", 5, 0.17)]
-    [InlineData("Anders", 2, 0.67)]
-    [InlineData("Ander", 3, 0.5)]
-    [InlineData("Rundgren", 2, 0.75)]
+    [InlineData("An", 3, 0.25)]
+    [InlineData("Anders", 0, 1)]
+    [InlineData("Ander", 1, 0.75)]
+    [InlineData("Rundgren", 0, 1)]
     public void Generating_keywords_calculates_levenshtein_distance_and_similarity(string source, int levenshteinDistance, double similarity)
     {
         // Given
