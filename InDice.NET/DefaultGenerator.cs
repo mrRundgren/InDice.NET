@@ -99,8 +99,8 @@ public class DefaultGenerator : IGenerator
                                 OriginalText = originalText,
                                 PropertyName = prop.Name,
                                 Match = originalText.ToMatchedString(_),
-                                LevenshteinDistance = originalText.ToLevenshteinDistance(_),
-                                Similarity = originalText.ToSimilarity(_)
+                                LevenshteinDistance = originalText.ToLevenshteinDistance(_, Encoder),
+                                Similarity = originalText.ToSimilarity(_, Encoder),
                             }).Where(x => !result.Any(r => r.Index.Equals(x.Index)))).ToList();
                     }
                 }
