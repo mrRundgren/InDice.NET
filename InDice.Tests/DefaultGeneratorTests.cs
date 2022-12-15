@@ -1,7 +1,4 @@
-﻿using System.Reflection.Metadata.Ecma335;
-using System.Runtime.ConstrainedExecution;
-
-namespace InDice.Tests;
+﻿namespace InDice.Tests;
 
 public class DefaultGeneratorTests
 {
