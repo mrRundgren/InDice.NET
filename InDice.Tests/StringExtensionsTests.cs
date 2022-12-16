@@ -156,6 +156,8 @@ public class StringExtensionsTests
     [InlineData("ONE", "One, two, three", "[One], two, three")]
     [InlineData("TWO", "One, two, three", "One, [two], three")]
     [InlineData("THREE", "One, two, three", "One, two, [three]")]
+    [InlineData("ONETWO", "One, two, three", "[One, two], three")]
+    [InlineData("TWOTHREE", "One, two, three", "One, [two, three]")]
     public void Index_can_be_matched_to_source_string(string index, string source, string expected)
     {
         // When
