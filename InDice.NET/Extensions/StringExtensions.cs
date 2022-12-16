@@ -1,4 +1,7 @@
-﻿namespace InDice.NET;
+﻿using System.Linq;
+using System.Net.Mail;
+
+namespace InDice.NET;
 
 public static class StringExtensions
 {
@@ -62,6 +65,7 @@ public static class StringExtensions
 
     public static string ToMatchedString(this string source, string index, (char lead, char trail) delimiters)
     {
+        
         if(source.Split(' ').Length > 1)
         {
             List<string> result = new();
@@ -71,7 +75,14 @@ public static class StringExtensions
                 result.Add(word!.ToMatchedString(index, delimiters));
             }
 
-            return string.Join(" ", result);
+            var match = string.Join(" ", result);
+
+            if (match.Length > 0 && !match.Contains(delimiters.lead))
+            {
+                match = $"{delimiters.lead}{match}{delimiters.trail}";
+            }
+
+            return match;
         }
         else
         {

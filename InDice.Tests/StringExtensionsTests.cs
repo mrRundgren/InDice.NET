@@ -142,6 +142,7 @@ public class StringExtensionsTests
     }
 
     [Theory]
+    [InlineData("THEAVENGERS", "The Avengers", "[The Avengers]")]
     [InlineData("ANDERS", "Anders", "[Anders]")]
     [InlineData("ANDER", "Anders", "[Ander]s")]
     [InlineData("ANDE", "Anders", "[Ande]rs")]
