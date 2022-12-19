@@ -36,7 +36,7 @@ public class DefaultGenerator : IGenerator
     public IEnumerable<Keyword> GenerateFor<T>(T entity) where T : class
     {
         IEnumerable<PropertyInfo> properties = entity.GetType().GetProperties().Where(prop => prop.IsDefined(typeof(InDiceIncludeAttribute), false));
-        List<Keyword> result = new List<Keyword>();
+        List<Keyword> result = new();
 
         foreach (var prop in properties)
         {
