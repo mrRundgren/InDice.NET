@@ -36,7 +36,7 @@ public class DefaultGenerator : IGenerator
     public IEnumerable<Keyword> GenerateFor<T>(T entity, bool includeDuplicates = false) where T : class
     {
         IEnumerable<PropertyInfo> properties = entity.GetType().GetProperties().Where(prop => prop.IsDefined(typeof(InDiceIncludeAttribute), false));
-        List<Keyword> result = new List<Keyword>();
+        List<Keyword> result = new();
 
         foreach (var prop in properties)
         {
@@ -90,9 +90,9 @@ public class DefaultGenerator : IGenerator
                         }
 
                         result = result.Union(Generate(words.ToArray())
-                            .Select(_ => new Keyword
+                            .Select(index => new Keyword
                             {
-                                Index = _,
+                                Index = index,
                                 OriginalText = originalText,
                                 PropertyName = prop.Name,
                                 Match = originalText.ToMatchedString(_),
