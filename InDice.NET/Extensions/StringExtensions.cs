@@ -1,7 +1,4 @@
-﻿using System.Linq;
-using System.Net.Mail;
-
-namespace InDice.NET;
+﻿namespace InDice.NET;
 
 public static class StringExtensions
 {
