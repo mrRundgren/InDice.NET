@@ -1,4 +1,5 @@
-﻿using System.Reflection.Emit;
+﻿using InDice.NET.Models;
+using System.Reflection.Emit;
 using System.Security.Cryptography.X509Certificates;
 
 namespace InDice.NET;
@@ -63,100 +64,23 @@ public static class StringExtensions
     public static string FindMatches(this string source, string search) =>
        FindMatches(source, search, ("[", "]"));
 
-    public static string FindMatches(this string source, string search, (string lead, string trail) delimiters, IEncoder? encoder = null)
+    public static string FindMatches(this string source, string search, (string lead, string trail) delimiters)
     {
-        if (encoder == null)
-        {
-            encoder = new DefaultEncoder();
-        }
+        var keywords = search.ExtractExplicits().Union(search.ExtractImplicits()).Distinct();
 
-        var explicits = search.ExtractExplicits(encoder);
-        var implicits = search.ExtractImplicits(encoder).Where(_ => !explicits.Contains(_));
-
-        foreach(var index in explicits)
+        foreach(var keyword in keywords)
         {
-            source = source.ToMatchedString(index, delimiters);
-        }
+            var ix = source.IndexOf(keyword, StringComparison.OrdinalIgnoreCase);
 
-        foreach (var index in implicits)
-        {
-            source = source.ToMatchedString(index, delimiters);
+            if(ix != -1)
+            {
+                var tmp = source.Substring(ix, keyword.Length);
+                source = source.Remove(ix, tmp.Length);
+                source = source.Insert(ix, $"{delimiters.lead}{tmp}{delimiters.trail}");
+            }
         }
 
         return source;
-    }
-    
-    public static string ToMatchedString(this string source, string index) =>
-        ToMatchedString(source, index, ("[", "]"));
-
-    public static string ToMatchedString(this string source, string index, (string lead, string trail) delimiters)
-    {
-        var words = source.Split(' ');
-        
-        if (words.Length > 1)
-        {
-            List<string> result = new();
-            source = source.Replace(" ", "_");
-
-            foreach (var word in words)
-            {
-                result.Add(word!.ToMatchedString(index, delimiters));
-            }
-
-            var match = string.Join(" ", result);
-
-            if (!match.Contains(delimiters.lead))
-            {
-                match = source!.ToMatchedString(index, delimiters).Replace("_", " ");
-            }
-
-            return match;
-        }
-        else
-        {
-            var stack = new Stack(index.Reverse().ToArray());
-            var start = 0;
-            int end = 0;
-            bool found = false;
-
-            for (int i = 0; i < source.ToArray().Length; i++)
-            {
-                if (stack.Count > 0)
-                {
-                    end = i + 1;
-                    if (char.ToUpperInvariant(source[i]).Equals(stack.Peek()))
-                    {
-                        stack.Pop();
-                        if(!found) { start = i; }
-                        found = true;
-                        continue;
-                    }
-                }
-                else
-                {
-                    end = i;
-                    break;
-                }
-            }
-
-            if (found && stack.Count == 0)
-            {
-                if(source.Contains('_'))
-                {
-                    return source
-                        .Insert(start, delimiters.lead.ToString())
-                        .Insert(end + 1, delimiters.trail.ToString());
-                }
-                else
-                {
-                    return string.Concat(delimiters.lead, source.Insert(end, delimiters.trail.ToString()));
-                }
-            }
-            else
-            {
-                return source;
-            }
-        }
     }
 
     public static string ToAbsoluteString(this string source)

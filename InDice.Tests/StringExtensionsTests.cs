@@ -141,31 +141,31 @@ public class StringExtensionsTests
         Assert.Equal(expected, result);
     }
 
-    [Theory]
-    [InlineData("THEAVENGERS", "The Avengers", "[The Avengers]")]
-    [InlineData("ANDERS", "Anders", "[Anders]")]
-    [InlineData("ANDER", "Anders", "[Ander]s")]
-    [InlineData("ANDE", "Anders", "[Ande]rs")]
-    [InlineData("AND", "Anders", "[And]ers")]
-    [InlineData("NDRS", "Anders", "[Anders]")]
-    [InlineData("NDR", "Anders", "[Ander]s")]
-    [InlineData("ND", "Anders", "[And]ers")]
-    [InlineData("N", "Anders", "[An]ders")]
-    [InlineData("VRLD", "Hej världen", "Hej [värld]en")]
-    [InlineData("TST", "This is a very good test", "This is a very good [test]")]
-    [InlineData("ONE", "One, two, three", "[One], two, three")]
-    [InlineData("TWO", "One, two, three", "One, [two], three")]
-    [InlineData("THREE", "One, two, three", "One, two, [three]")]
-    [InlineData("ONETWO", "One, two, three", "[One, two], three")]
-    [InlineData("TWOTHREE", "One, two, three", "One, [two, three]")]
-    public void Index_can_be_matched_to_source_string(string index, string source, string expected)
-    {
-        // When
-        var result = source.ToMatchedString(index);
+    //[Theory]
+    //[InlineData("THEAVENGERS", "The Avengers", "[The Avengers]")]
+    //[InlineData("ANDERS", "Anders", "[Anders]")]
+    //[InlineData("ANDER", "Anders", "[Ander]s")]
+    //[InlineData("ANDE", "Anders", "[Ande]rs")]
+    //[InlineData("AND", "Anders", "[And]ers")]
+    //[InlineData("NDRS", "Anders", "[Anders]")]
+    //[InlineData("NDR", "Anders", "[Ander]s")]
+    //[InlineData("ND", "Anders", "[And]ers")]
+    //[InlineData("N", "Anders", "[An]ders")]
+    //[InlineData("VRLD", "Hej världen", "Hej [värld]en")]
+    //[InlineData("TST", "This is a very good test", "This is a very good [test]")]
+    //[InlineData("ONE", "One, two, three", "[One], two, three")]
+    //[InlineData("TWO", "One, two, three", "One, [two], three")]
+    //[InlineData("THREE", "One, two, three", "One, two, [three]")]
+    //[InlineData("ONETWO", "One, two, three", "[One, two], three")]
+    //[InlineData("TWOTHREE", "One, two, three", "One, [two, three]")]
+    //public void Index_can_be_matched_to_source_string(string index, string source, string expected)
+    //{
+    //    // When
+    //    var result = source.ToMatchedString(index);
 
-        // Then
-        Assert.Equal(expected, result);
-    }
+    //    // Then
+    //    Assert.Equal(expected, result);
+    //}
 
     [Theory]
     [InlineData("anders", "Anders", 0)]
@@ -204,8 +204,9 @@ public class StringExtensionsTests
     }
 
     [Theory]
-    [InlineData("+the only", "the one and only", "[the] one and [only]")]
-    [InlineData("+one and", "the one and only", "the [one] [and] only")]
+    [InlineData("+tHE onLY", "the one and only olony", "[the] one and [only] olony")]
+    [InlineData("+One aNd", "the one and only olony", "the [one] [and] only olony")]
+    [InlineData("+\"the avenger\"", "The Avengers", "[The Avenger]s")]
     public void Can_apply_matches_from_search_string_to_string(string search, string source, string expected)
     {
         // When
