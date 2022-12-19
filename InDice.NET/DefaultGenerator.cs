@@ -95,9 +95,9 @@ public class DefaultGenerator : IGenerator
                                 Index = index,
                                 OriginalText = originalText,
                                 PropertyName = prop.Name,
-                                Match = originalText.ToMatchedString(_),
-                                LevenshteinDistance = originalText.ToLevenshteinDistance(_, Encoder),
-                                Similarity = originalText.ToSimilarity(_, Encoder),
+                                Match = originalText.ToMatchedString(index),
+                                LevenshteinDistance = originalText.ToLevenshteinDistance(index, Encoder),
+                                Similarity = originalText.ToSimilarity(index, Encoder),
                             }).Where(x => includeDuplicates || !result.Any(r => r.Index.Equals(x.Index)))).ToList();
                     }
                 }
