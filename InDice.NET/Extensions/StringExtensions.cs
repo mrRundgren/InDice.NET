@@ -1,4 +1,7 @@
-﻿namespace InDice.NET;
+﻿using System.Reflection.Emit;
+using System.Security.Cryptography.X509Certificates;
+
+namespace InDice.NET;
 
 public static class StringExtensions
 {
@@ -56,11 +59,34 @@ public static class StringExtensions
 
         return distance[sourceWordCount, targetWordCount];
     }
+
+    public static string FindMatches(this string source, string search, IEncoder? encoder = null)
+    {
+        if (encoder == null)
+        {
+            encoder = new DefaultEncoder();
+        }
+
+        var explicits = search.ExtractExplicits(encoder);
+        var implicits = search.ExtractImplicits(encoder).Where(_ => !explicits.Contains(_));
+
+        foreach(var index in explicits)
+        {
+            source = source.ToMatchedString(index);
+        }
+
+        foreach (var index in implicits)
+        {
+            source = source.ToMatchedString(index);
+        }
+
+        return source;
+    }
     
     public static string ToMatchedString(this string source, string index) =>
-        ToMatchedString(source, index, ('[', ']'));
+        ToMatchedString(source, index, ("[", "]"));
 
-    public static string ToMatchedString(this string source, string index, (char lead, char trail) delimiters)
+    public static string ToMatchedString(this string source, string index, (string lead, string trail) delimiters)
     {
         var words = source.Split(' ');
         

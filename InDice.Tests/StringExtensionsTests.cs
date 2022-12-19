@@ -203,6 +203,18 @@ public class StringExtensionsTests
         Assert.Equal(expected, result);
     }
 
+    [Theory]
+    [InlineData("+the only", "the one and only", "[the] one and [only]")]
+    [InlineData("+one and", "the one and only", "the [one] [and] only")]
+    public void Can_apply_matches_from_search_string_to_string(string search, string source, string expected)
+    {
+        // When
+        var result = StringExtensions.FindMatches(source, search);
+
+        // Then
+        Assert.Equal(expected, result);
+    }
+
     public static IEncoder Given_an_encoder() =>
         new DefaultEncoder();
 }
