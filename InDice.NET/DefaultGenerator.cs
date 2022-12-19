@@ -95,11 +95,15 @@ public class DefaultGenerator : IGenerator
                                 Index = index,
                                 LevenshteinDistance = originalText.ToLevenshteinDistance(index, Encoder),
                                 Similarity = originalText.ToSimilarity(index, Encoder),
-                            }).Where(x => !result.Any(r => r.Index.Equals(x.Index)))).ToList();
+                            })).ToList();
                     }
                 }
             }
         }
+
+        result = result
+            .GroupBy(x => x.Index)
+            .Select(_ => _.MaxBy(x => x.Similarity)!).ToList();
 
         return result.OrderBy(_ => _.Index.Length);
     }
