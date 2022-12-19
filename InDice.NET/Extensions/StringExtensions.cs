@@ -60,7 +60,10 @@ public static class StringExtensions
         return distance[sourceWordCount, targetWordCount];
     }
 
-    public static string FindMatches(this string source, string search, IEncoder? encoder = null)
+    public static string FindMatches(this string source, string search) =>
+       FindMatches(source, search, ("[", "]"));
+
+    public static string FindMatches(this string source, string search, (string lead, string trail) delimiters, IEncoder? encoder = null)
     {
         if (encoder == null)
         {
@@ -72,12 +75,12 @@ public static class StringExtensions
 
         foreach(var index in explicits)
         {
-            source = source.ToMatchedString(index);
+            source = source.ToMatchedString(index, delimiters);
         }
 
         foreach (var index in implicits)
         {
-            source = source.ToMatchedString(index);
+            source = source.ToMatchedString(index, delimiters);
         }
 
         return source;
