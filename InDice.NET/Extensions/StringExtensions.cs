@@ -67,20 +67,55 @@ public static class StringExtensions
     public static string FindMatches(this string source, string search, (string lead, string trail) delimiters)
     {
         var keywords = search.ExtractExplicits().Union(search.ExtractImplicits()).Distinct();
+        var words = source.Split(' ');
 
         foreach(var keyword in keywords)
         {
-            var ix = source.IndexOf(keyword, StringComparison.OrdinalIgnoreCase);
+            bool add = true;
 
-            if(ix != -1)
+            foreach (var x in keyword.Split(' '))
             {
-                var tmp = source.Substring(ix, keyword.Length);
-                source = source.Remove(ix, tmp.Length);
-                source = source.Insert(ix, $"{delimiters.lead}{tmp}{delimiters.trail}");
+                if(!words.Any(_ => _.StartsWith(x, StringComparison.OrdinalIgnoreCase)))
+                {
+                    add = false;
+                }
+            }
+
+            if(add)
+            {
+                var factor = 0;
+
+                foreach (var ix in source.IndexesOfAll(keyword, true))
+                {
+                    var tmp = source.Substring(ix + factor, keyword.Length);
+                    source = source.Remove(ix + factor, tmp.Length);
+                    source = source.Insert(ix + factor, $"{delimiters.lead}{tmp}{delimiters.trail}");
+
+                    factor = factor + (delimiters.lead.Length + delimiters.trail.Length);
+                }
             }
         }
 
         return source;
+    }
+
+    public static int[] IndexesOfAll(this string source, string keyword, bool ignoreCase = false)
+    {
+        if (string.IsNullOrWhiteSpace(source) ||
+            string.IsNullOrWhiteSpace(keyword))
+        {
+            throw new ArgumentException("String or substring is not specified.");
+        }
+
+        var indexes = new List<int>();
+        int index = 0;
+
+        while ((index = source.IndexOf(keyword, index, ignoreCase ? StringComparison.OrdinalIgnoreCase : StringComparison.Ordinal)) != -1)
+        {
+            indexes.Add(index++);
+        }
+
+        return indexes.ToArray();
     }
 
     public static string ToAbsoluteString(this string source)
