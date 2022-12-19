@@ -4,7 +4,7 @@ InDice.NET is a c# library to aid in generating keywords for poco classes.
 
 ## Installation
 
-Use the package manager [nuget](https://www.nuget.org/packages/InDice.NET/) to install foobar.
+Use the package manager [nuget](https://www.nuget.org/packages/InDice.NET/) to install InDice.NET.
 
 ## Usage
 
