@@ -36,7 +36,7 @@ public class DefaultGenerator : IGenerator
     public IEnumerable<Keyword> GenerateFor<T>(T entity) where T : class
     {
         IEnumerable<PropertyInfo> properties = entity.GetType().GetProperties().Where(prop => prop.IsDefined(typeof(InDiceIncludeAttribute), false));
-        List<Keyword> result = new();
+        IEnumerable<Keyword> result = new List<Keyword>();
 
         foreach (var prop in properties)
         {
@@ -95,7 +95,7 @@ public class DefaultGenerator : IGenerator
                                 Index = index,
                                 LevenshteinDistance = originalText.ToLevenshteinDistance(index, Encoder),
                                 Similarity = originalText.ToSimilarity(index, Encoder),
-                            })).ToList();
+                            }));
                     }
                 }
             }
@@ -103,7 +103,7 @@ public class DefaultGenerator : IGenerator
 
         result = result
             .GroupBy(x => x.Index)
-            .Select(_ => _.MaxBy(x => x.Similarity)!).ToList();
+            .Select(_ => _.MaxBy(x => x.Similarity)!);
 
         return result.OrderBy(_ => _.Index.Length);
     }
