@@ -60,50 +60,50 @@ public class DefaultGeneratorTests
         Assert.Equal(index, result.First(_ => _.Index.Equals(index)).Index);
     }
 
-    [Fact]
-    public void Generating_keywords_sets_original_text()
-    {
-        // Given
-        var (person, generator, expected) = Given_a_person_with_manager_and_a_generator_and_an_expected_result();
-        var originalText = "Anders";
+    //[Fact]
+    //public void Generating_keywords_sets_original_text()
+    //{
+    //    // Given
+    //    var (person, generator, expected) = Given_a_person_with_manager_and_a_generator_and_an_expected_result();
+    //    var originalText = "Anders";
 
-        // When
-        var result = generator.GenerateFor(person);
+    //    // When
+    //    var result = generator.GenerateFor(person);
 
-        // Then
-        Assert.Equal(expected, result.Select(_ => _.Index));
-        Assert.Equal(originalText, result.First().OriginalText);
-    }
+    //    // Then
+    //    Assert.Equal(expected, result.Select(_ => _.Index));
+    //    Assert.Equal(originalText, result.First().OriginalText);
+    //}
 
-    [Fact]
-    public void Generating_keywords_sets_property_name()
-    {
-        // Given
-        var (person, generator, expected) = Given_a_person_with_manager_and_a_generator_and_an_expected_result();
-        var propertyName = "Firstname";
+    //[Fact]
+    //public void Generating_keywords_sets_property_name()
+    //{
+    //    // Given
+    //    var (person, generator, expected) = Given_a_person_with_manager_and_a_generator_and_an_expected_result();
+    //    var propertyName = "Firstname";
 
-        // When
-        var result = generator.GenerateFor(person);
+    //    // When
+    //    var result = generator.GenerateFor(person);
 
-        // Then
-        Assert.Equal(expected, result.Select(_ => _.Index));
-        Assert.Equal(propertyName, result.First().PropertyName);
-    }
+    //    // Then
+    //    Assert.Equal(expected, result.Select(_ => _.Index));
+    //    Assert.Equal(propertyName, result.First().PropertyName);
+    //}
 
-    [Fact]
-    public void Generating_keywords_allows_to_check_match()
-    {
-        // Given
-        var (person, generator, expected) = Given_a_person_with_manager_and_a_generator_and_an_expected_result();
-        var originalText = "[An]ders";
+    //[Fact]
+    //public void Generating_keywords_allows_to_check_match()
+    //{
+    //    // Given
+    //    var (person, generator, expected) = Given_a_person_with_manager_and_a_generator_and_an_expected_result();
+    //    var originalText = "[An]ders";
 
-        // When
-        var result = generator.GenerateFor(person);
+    //    // When
+    //    var result = generator.GenerateFor(person);
 
-        // Then
-        Assert.Equal(expected, result.Select(_ => _.Index));
-        Assert.Equal(originalText, result.First().Match);
-    }
+    //    // Then
+    //    Assert.Equal(expected, result.Select(_ => _.Index));
+    //    Assert.Equal(originalText, result.First().Match);
+    //}
 
     [Theory]
     [InlineData("An", 3, 0.25)]

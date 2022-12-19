@@ -93,9 +93,6 @@ public class DefaultGenerator : IGenerator
                             .Select(index => new Keyword
                             {
                                 Index = index,
-                                OriginalText = originalText,
-                                PropertyName = prop.Name,
-                                Match = originalText.ToMatchedString(index),
                                 LevenshteinDistance = originalText.ToLevenshteinDistance(index, Encoder),
                                 Similarity = originalText.ToSimilarity(index, Encoder),
                             }).Where(x => !result.Any(r => r.Index.Equals(x.Index)))).ToList();
