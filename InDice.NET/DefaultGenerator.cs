@@ -33,7 +33,7 @@ public class DefaultGenerator : IGenerator
         return result.Distinct();
     }
 
-    public IEnumerable<Keyword> GenerateFor<T>(T entity) where T : class
+    public IEnumerable<Keyword> GenerateFor<T>(T entity, bool includeDuplicates = false) where T : class
     {
         IEnumerable<PropertyInfo> properties = entity.GetType().GetProperties().Where(prop => prop.IsDefined(typeof(InDiceIncludeAttribute), false));
         List<Keyword> result = new List<Keyword>();
@@ -98,7 +98,7 @@ public class DefaultGenerator : IGenerator
                                 Match = originalText.ToMatchedString(_),
                                 LevenshteinDistance = originalText.ToLevenshteinDistance(_, Encoder),
                                 Similarity = originalText.ToSimilarity(_, Encoder),
-                            }).Where(x => !result.Any(r => r.Index.Equals(x.Index)))).ToList();
+                            }).Where(x => includeDuplicates || !result.Any(r => r.Index.Equals(x.Index)))).ToList();
                     }
                 }
             }
