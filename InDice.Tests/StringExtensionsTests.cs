@@ -178,12 +178,13 @@ public class StringExtensionsTests
     }
 
     [Theory]
-    [InlineData("a aven the avengers \"the avengers\"", "The Avengers", "[[The] [[[A]ven]gers]]")]
+    //[InlineData("a aven the avengers \"the avengers\"", "The Avengers", "[The Avengers]")]
     [InlineData("+tHE onLY", "the one and only olony", "[the] one and [only] olony")]
     [InlineData("+One aNd", "the one and only olony", "the [one] [and] only olony")]
     [InlineData("+\"the avenger\"", "The Avengers", "[The Avenger]s")]
     [InlineData("one two", "one two three two", "[one] [two] three [two]")]
-    [InlineData("n", "one two three two", "one two three two")]
+    [InlineData("one two", "one two three two helixcondrone", "[one] [two] three [two] helixcondrone")]
+    //[InlineData("\"one two\" two", "one two three two helixcondrone", "[one two] three [two] helixcondrone")]
     [InlineData("+\"joss whedon\"", "Joss Whedon (screenplay), Zak Penn (story), Joss Whedon (story)", "[Joss Whedon] (screenplay), Zak Penn (story), [Joss Whedon] (story)")]
     public void Can_apply_matches_from_search_string_to_string(string search, string source, string expected)
     {

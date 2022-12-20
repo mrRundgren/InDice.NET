@@ -83,12 +83,17 @@ public static class StringExtensions
 
                 foreach (var ix in source.IndexesOfAll(keyword))
                 {
-                    var tmp = source.Substring(ix + factor, keyword.Length);
-                   
-                    source = source.Remove(ix + factor, tmp.Length);
-                    source = source.Insert(ix + factor, $"{delimiters.lead}{tmp}{delimiters.trail}");
+                    var start = ix + factor;
 
-                    factor += (delimiters.lead.Length + delimiters.trail.Length);
+                    if(start == 0 || source[start - 1] == ' ')
+                    {
+                        var tmp = source.Substring(ix + factor, keyword.Length);
+
+                        source = source.Remove(ix + factor, tmp.Length);
+                        source = source.Insert(ix + factor, $"{delimiters.lead}{tmp}{delimiters.trail}");
+
+                        factor += (delimiters.lead.Length + delimiters.trail.Length);
+                    }
                 }
             }
         }
