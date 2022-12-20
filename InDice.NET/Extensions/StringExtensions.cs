@@ -87,7 +87,7 @@ public static class StringExtensions
                     source = source.Remove(ix + factor, tmp.Length);
                     source = source.Insert(ix + factor, $"{delimiters.lead}{tmp}{delimiters.trail}");
 
-                    factor = factor + (delimiters.lead.Length + delimiters.trail.Length);
+                    factor += (delimiters.lead.Length + delimiters.trail.Length);
                 }
             }
         }
