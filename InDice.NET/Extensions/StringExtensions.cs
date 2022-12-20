@@ -66,7 +66,7 @@ public static class StringExtensions
 
     public static string FindMatches(this string source, string search, (string lead, string trail) delimiters)
     {
-        var keywords = search.ExtractExplicits().Union(search.ExtractImplicits()).Distinct();
+        var keywords = search.ExtractExplicits().Union(search.ExtractImplicits()).Distinct().OrderByDescending(_ => _.Length);
         var words = source.Split(' ');
 
         foreach(var keyword in keywords)
@@ -101,12 +101,6 @@ public static class StringExtensions
 
     public static int[] IndexesOfAll(this string source, string keyword, bool ignoreCase = false)
     {
-        if (string.IsNullOrWhiteSpace(source) ||
-            string.IsNullOrWhiteSpace(keyword))
-        {
-            throw new ArgumentException("String or substring is not specified.");
-        }
-
         var indexes = new List<int>();
         int index = 0;
 
