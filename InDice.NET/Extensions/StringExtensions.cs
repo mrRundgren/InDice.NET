@@ -1,8 +1,4 @@
-﻿using InDice.NET.Models;
-using System.Reflection.Emit;
-using System.Security.Cryptography.X509Certificates;
-
-namespace InDice.NET;
+﻿namespace InDice.NET;
 
 public static class StringExtensions
 {
