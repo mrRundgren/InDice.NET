@@ -81,7 +81,7 @@ public static class StringExtensions
             {
                 var factor = 0;
 
-                foreach (var ix in source.IndexesOfAll(keyword, true))
+                foreach (var ix in source.IndexesOfAll(keyword))
                 {
                     var tmp = source.Substring(ix + factor, keyword.Length);
                    
@@ -96,12 +96,12 @@ public static class StringExtensions
         return source;
     }
 
-    public static int[] IndexesOfAll(this string source, string keyword, bool ignoreCase = false)
+    public static int[] IndexesOfAll(this string source, string keyword)
     {
         var indexes = new List<int>();
         int index = 0;
 
-        while ((index = source.IndexOf(keyword, index, ignoreCase ? StringComparison.OrdinalIgnoreCase : StringComparison.Ordinal)) != -1)
+        while ((index = source.IndexOf(keyword, index, StringComparison.OrdinalIgnoreCase)) != -1)
         {
             indexes.Add(index++);
         }
