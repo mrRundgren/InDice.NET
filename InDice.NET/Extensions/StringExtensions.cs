@@ -84,6 +84,7 @@ public static class StringExtensions
                 foreach (var ix in source.IndexesOfAll(keyword, true))
                 {
                     var tmp = source.Substring(ix + factor, keyword.Length);
+                   
                     source = source.Remove(ix + factor, tmp.Length);
                     source = source.Insert(ix + factor, $"{delimiters.lead}{tmp}{delimiters.trail}");
 
