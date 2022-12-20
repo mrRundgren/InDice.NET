@@ -1,4 +1,5 @@
 ﻿using InDice.NET.Models;
+using System.ComponentModel;
 
 namespace InDice.NET;
 
