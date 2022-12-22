@@ -186,6 +186,7 @@ public class StringExtensionsTests
     [InlineData("one two", "one two three two helixcondrone", "[one] [two] three [two] helixcondrone")]
     //[InlineData("\"one two\" two", "one two three two helixcondrone", "[one two] three [two] helixcondrone")]
     [InlineData("+\"joss whedon\"", "Joss Whedon (screenplay), Zak Penn (story), Joss Whedon (story)", "[Joss Whedon] (screenplay), Zak Penn (story), [Joss Whedon] (story)")]
+    [InlineData("+test", "this has no words that begin withtest", "this has no words that begin withtest")]
     public void Can_apply_matches_from_search_string_to_string(string search, string source, string expected)
     {
         // When

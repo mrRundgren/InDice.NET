@@ -1,9 +1,7 @@
-﻿using InDice.NET.Models;
-
-namespace InDice.NET;
+﻿namespace InDice.NET;
 public interface IGenerator
 {
     IEncoder Encoder { get; set; }
     IEnumerable<string> Generate(params string[] keywords);
-    IEnumerable<Keyword> GenerateFor<T>(T entity) where T : class;
+    IEnumerable<(string Index, int LevenshteinDistance, double Similarity)> GenerateFor<T>(T entity) where T : class;
 }

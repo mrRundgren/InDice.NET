@@ -1,7 +1,4 @@
-﻿using InDice.NET.Models;
-using System.ComponentModel;
-
-namespace InDice.NET;
+﻿namespace InDice.NET;
 
 public class DefaultGenerator : IGenerator
 {
@@ -34,10 +31,10 @@ public class DefaultGenerator : IGenerator
         return result.Distinct();
     }
 
-    public IEnumerable<Keyword> GenerateFor<T>(T entity) where T : class
+    public IEnumerable<(string Index, int LevenshteinDistance, double Similarity)> GenerateFor<T>(T entity) where T : class
     {
         IEnumerable<PropertyInfo> properties = entity.GetType().GetProperties().Where(prop => prop.IsDefined(typeof(InDiceIncludeAttribute), false));
-        IEnumerable<Keyword> result = new List<Keyword>();
+        IEnumerable<(string Index, int LevenshteinDistance, double Similarity)> result = new List<(string Index, int LevenshteinDistance, double Similarity)>();
 
         foreach (var prop in properties)
         {
@@ -91,12 +88,7 @@ public class DefaultGenerator : IGenerator
                         }
 
                         result = result.Union(Generate(words.ToArray())
-                            .Select(index => new Keyword
-                            {
-                                Index = index,
-                                LevenshteinDistance = originalText.ToLevenshteinDistance(index, Encoder),
-                                Similarity = originalText.ToSimilarity(index, Encoder),
-                            }));
+                            .Select(index => (index, originalText.ToLevenshteinDistance(index, Encoder), originalText.ToSimilarity(index, Encoder))));
                     }
                 }
             }
