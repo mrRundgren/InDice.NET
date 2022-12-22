@@ -63,7 +63,7 @@ public class DefaultGenerator : IGenerator
                     else if(!string.IsNullOrEmpty(val?.ToString() ?? ""))
                     {
                         string originalText = val!.ToString()!;
-                        List<string> words = new List<string>();
+                        List<string> words = new();
 
                         if (mode == InDiceGenerateMode.SplitOnWords)
                         {
