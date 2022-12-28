@@ -38,6 +38,7 @@ The DefaultEncoder used by DefaultGenerator will remove any non letters or numbe
 ```c#
 var keywords = new DefaultGenerator("AOUÅEIYÄÖ").GenerateFor(person);
 ```
+Beware that this will give a less accurate similarity ranking and make the match functionality not work, this might eventually be fixed, but as for now it is what it is.
 
 ## License
 
