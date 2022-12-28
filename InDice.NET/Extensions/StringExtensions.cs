@@ -1,4 +1,6 @@
-﻿namespace InDice.NET;
+﻿using System.Text.RegularExpressions;
+
+namespace InDice.NET;
 
 public static class StringExtensions
 {
@@ -62,42 +64,32 @@ public static class StringExtensions
 
     public static string FindMatches(this string source, string search, (string lead, string trail) delimiters)
     {
-        var keywords = search.ExtractExplicits().Union(search.ExtractImplicits()).Distinct().OrderByDescending(_ => _.Length);
-        var words = source.Split(' ');
+        var keywords = search.ExtractExplicits().Union(search.ExtractImplicits()).Distinct().OrderByDescending(_ => _.Length).ThenBy(_ => _).ToArray();
+        var found = new List<(int lead, int trail)>();
 
-        foreach(var keyword in keywords)
+        foreach (var keyword in keywords)
         {
-            bool add = true;
-
-            foreach (var x in keyword.Split(' '))
-            {
-                if(!words.Any(_ => _.StartsWith(x, StringComparison.OrdinalIgnoreCase)))
-                {
-                    add = false;
-                }
-            }
-
-            if(add)
-            {
+                var matches = source.IndexesOfAll(keyword).OrderBy(_ => _).ToArray();
                 var factor = 0;
 
-                foreach (var ix in source.IndexesOfAll(keyword))
+                foreach (var ix in matches)
                 {
-                    var start = ix + factor;
+                    var lead = ix + factor;
+                    var trail = lead + keyword.Length + 1;
 
-                    if(start == 0 || source[start - 1] == ' ')
+                    if (lead == 0 || source[lead - 1] == ' ')
                     {
-                        var tmp = source.Substring(ix + factor, keyword.Length);
+                        if(!found.Any(_ => lead >= _.lead && lead <= _.trail))
+                        {
+                            source = source.Insert(lead, delimiters.lead);
+                            source = source.Insert(trail, delimiters.trail);
+                            factor += (delimiters.lead.Length + delimiters.trail.Length);
 
-                        source = source.Remove(ix + factor, tmp.Length);
-                        source = source.Insert(ix + factor, $"{delimiters.lead}{tmp}{delimiters.trail}");
-
-                        factor += (delimiters.lead.Length + delimiters.trail.Length);
+                            found.Add((lead, trail));
+                        }
                     }
                 }
-            }
         }
-
         return source;
     }
 
