@@ -31,6 +31,8 @@ Then just run the Generate method on an instance of the object.
 ```c#
 var keywords = new DefaultGenerator().GenerateFor(person);
 ```
+A list of "triples" containing the encoded keyword, similarity and Levenshtein distance will be returned.
+
 ### DefaultEncoder
 
 The DefaultEncoder used by DefaultGenerator will remove any non letters or numbers aswell as making the string all uppercase, if you need to remove other special characters, for instance wovels this can be achieved by simply adding a string (case insensitive) containing them to the constructor of the generator.
